@@ -4,7 +4,7 @@ import { isChecksummedAddress } from '@/utils/addresses'
 import type { LOCAL_STORAGE_DATA } from './common'
 import { parseLsValue } from './common'
 
-const OLD_LS_KEY = 'SAFE__addressBook'
+const OLD_LS_KEY = 'CRONOS_SAFE__addressBook'
 
 type OldAddressBook = Array<{ address: string; name: string; chainId: string }>
 
