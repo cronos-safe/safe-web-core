@@ -6,7 +6,7 @@ import { useAppDispatch } from '@/store'
 import { openCookieBanner } from '@/store/popupSlice'
 import { AppRoutes } from '@/config/routes'
 import packageJson from '../../../../package.json'
-import AppstoreButton from '../AppStoreButton'
+//import AppstoreButton from '../AppStoreButton'
 import ExternalLink from '../ExternalLink'
 
 const footerPages = [AppRoutes.welcome, AppRoutes.settings.index]
@@ -28,45 +28,50 @@ const Footer = (): ReactElement | null => {
     <footer className={css.container}>
       <ul>
         <li>
-          <Typography variant="caption">&copy;2022 Safe Ecosystem Foundation</Typography>
+          <Typography variant="caption">&copy;2022 Cronos</Typography>
         </li>
         <li>
-          <ExternalLink suppressIcon href="https://safe.global/terms">
-            Terms
+          <ExternalLink suppressIcon href="https://cronos.org/">
+            Cronos Network
           </ExternalLink>
         </li>
         <li>
-          <ExternalLink suppressIcon href="https://safe.global/privacy">
-            Privacy
+          <ExternalLink suppressIcon href="https://cronos.org/docs/">
+            Cronos Documentation
           </ExternalLink>
         </li>
         <li>
-          <ExternalLink suppressIcon href="https://safe.global/licenses">
-            Licenses
+          <ExternalLink suppressIcon href="https://help.gnosis-safe.io/en/">
+            Help Center
           </ExternalLink>
         </li>
-        <li>
+        {/* <li>
           <ExternalLink suppressIcon href="https://safe.global/imprint">
             Imprint
           </ExternalLink>
-        </li>
+        </li> */}
         <li>
-          <ExternalLink suppressIcon href="https://safe.global/cookie">
+          {/* <ExternalLink suppressIcon href="https://safe.global/cookie">
             Cookie Policy
           </ExternalLink>
-          &nbsp;&mdash;&nbsp;
+          &nbsp;&mdash;&nbsp; */}
           <Link href="#" onClick={onCookieClick}>
             Preferences
           </Link>
+        </li>
+        <li>
+          <ExternalLink suppressIcon href="https://cronos-safe.org/terms">
+            Disclaimer
+          </ExternalLink>
         </li>
         <li>
           <ExternalLink suppressIcon href={`${packageJson.homepage}/releases/tag/v${packageJson.version}`}>
             v{packageJson.version}
           </ExternalLink>
         </li>
-        <li>
+        {/* <li>
           <AppstoreButton placement="footer" />
-        </li>
+        </li> */}
       </ul>
     </footer>
   )
