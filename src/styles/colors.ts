@@ -54,7 +54,7 @@ const palette = {
     main: '#636669',
   },
   logo: {
-    main: '#121312',
+    main: '#002D74',
     background: '#EEEFF0',
   },
   static: {
