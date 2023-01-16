@@ -74,13 +74,9 @@ const SetNameStep = ({ params, onSubmit, onBack, setStep }: Props) => {
 
             <Typography mt={2}>
               By continuing you consent to the{' '}
-              <ExternalLink href="https://safe.global/terms" fontWeight={700}>
+              <ExternalLink href="/terms" fontWeight={700}>
                 terms of use
               </ExternalLink>{' '}
-              and{' '}
-              <ExternalLink href="https://safe.global/privacy" fontWeight={700}>
-                privacy policy
-              </ExternalLink>
               .
             </Typography>
           </Box>

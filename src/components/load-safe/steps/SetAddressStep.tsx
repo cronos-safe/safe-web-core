@@ -117,9 +117,7 @@ const SetAddressStep = ({ params, onSubmit, onBack }: Props) => {
             </Box>
 
             <Typography mt={2}>
-              By continuing you consent to the{' '}
-              <ExternalLink href="https://safe.global/terms">terms of use</ExternalLink> and{' '}
-              <ExternalLink href="https://safe.global/privacy">privacy policy</ExternalLink>.
+              By continuing you consent to the <ExternalLink href="/terms">terms of use</ExternalLink>.
             </Typography>
           </Box>
 

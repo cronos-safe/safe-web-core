@@ -35,4 +35,5 @@ export const AppRoutes = {
     index: '/transactions',
     history: '/transactions/history',
   },
+  terms: '/terms',
 }
