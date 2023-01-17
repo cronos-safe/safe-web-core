@@ -60,7 +60,7 @@ const Footer = (): ReactElement | null => {
           </Link>
         </li>
         <li>
-          <ExternalLink suppressIcon href="https://cronos-safe.org/terms">
+          <ExternalLink suppressIcon href="/terms">
             Disclaimer
           </ExternalLink>
         </li>
