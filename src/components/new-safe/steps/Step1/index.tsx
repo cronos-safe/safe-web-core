@@ -93,13 +93,9 @@ function CreateSafeStep1({
           </Grid>
           <Typography variant="body2" mt={2}>
             By continuing, you agree to our{' '}
-            <ExternalLink href="https://safe.global/terms" fontWeight={700}>
+            <ExternalLink href="/terms" fontWeight={700}>
               terms of use
             </ExternalLink>{' '}
-            and{' '}
-            <ExternalLink href="https://safe.global/privacy" fontWeight={700}>
-              privacy policy
-            </ExternalLink>
             .
           </Typography>
 
