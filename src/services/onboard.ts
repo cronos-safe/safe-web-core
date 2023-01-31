@@ -4,6 +4,7 @@ import type { ChainInfo } from '@safe-global/safe-gateway-typescript-sdk'
 import { hexValue } from '@ethersproject/bytes'
 import { getAllWallets, getRecommendedInjectedWallets } from '@/hooks/wallets/wallets'
 import { getRpcServiceUrl } from '@/hooks/wallets/web3'
+import { AppRoutes } from '@/config/routes'
 
 export type ConnectedWallet = {
   label: string
@@ -43,6 +44,10 @@ export const createOnboard = (chainConfigs: ChainInfo[]): OnboardAPI => {
     appMetadata: {
       name: 'Safe',
       icon: '/images/safe-logo-green.png',
+      agreement: {
+        termsUrl: window.location.origin + AppRoutes.terms,
+        version: '1.0.0',
+      },
       description: 'Please select a wallet to connect to Safe',
       recommendedInjectedWallets: getRecommendedInjectedWallets(),
     },
