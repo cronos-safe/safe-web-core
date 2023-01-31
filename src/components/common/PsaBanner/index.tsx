@@ -13,7 +13,7 @@ import { selectAllAddressBooks } from '@/store/addressBookSlice'
 import { useAppSelector } from '@/store'
 
 const WARNING_BANNER = 'WARNING_BANNER'
-const OLD_APP = 'https://old.new.cronos-safe.org'
+const OLD_APP = 'https://old.cronos-safe.org'
 
 const ExportLink = ({ children }: { children: ReactNode }): ReactElement => {
   const router = useRouter()
