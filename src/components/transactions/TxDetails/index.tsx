@@ -30,6 +30,8 @@ import useWallet from '@/hooks/wallets/useWallet'
 import useIsWrongChain from '@/hooks/useIsWrongChain'
 import { DelegateCallWarning, UnsignedWarning } from '@/components/transactions/Warning'
 import Multisend from '@/components/transactions/TxDetails/TxData/DecodedData/Multisend'
+import useSafeInfo from '@/hooks/useSafeInfo'
+import useIsPending from '@/hooks/useIsPending'
 
 export const NOT_AVAILABLE = 'n/a'
 
@@ -42,6 +44,7 @@ const TxDetailsBlock = ({ txSummary, txDetails }: TxDetailsProps): ReactElement 
   const chainId = useChainId()
   const wallet = useWallet()
   const isWrongChain = useIsWrongChain()
+  const isPending = useIsPending(txSummary.id)
   const isQueue = isTxQueued(txSummary.txStatus)
   const awaitingExecution = isAwaitingExecution(txSummary.txStatus)
   const isUnsigned =
@@ -80,7 +83,8 @@ const TxDetailsBlock = ({ txSummary, txDetails }: TxDetailsProps): ReactElement 
         )}
 
         <div className={css.txSummary}>
-          {isUntrusted && <UnsignedWarning />}
+          {isUntrusted && !isPending && <UnsignedWarning />}
+
           {txDetails.txData?.operation === Operation.DELEGATE && (
             <div className={css.delegateCall}>
               <DelegateCallWarning showWarning={!txDetails.txData.trustedDelegateCallTarget} />
@@ -122,10 +126,15 @@ const TxDetails = ({
   txDetails?: TransactionDetails // optional
 }): ReactElement => {
   const chainId = useChainId()
+  const { safe } = useSafeInfo()
 
-  const [txDetailsData, error, loading] = useAsync<TransactionDetails>(async () => {
-    return txDetails || getTransactionDetails(chainId, txSummary.id)
-  }, [txDetails, chainId, txSummary.id])
+  const [txDetailsData, error, loading] = useAsync<TransactionDetails>(
+    async () => {
+      return txDetails || getTransactionDetails(chainId, txSummary.id)
+    },
+    [txDetails, chainId, txSummary.id, safe.txQueuedTag],
+    false,
+  )
 
   return (
     <div className={css.container}>

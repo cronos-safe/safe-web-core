@@ -5,6 +5,7 @@ import { hexValue } from '@ethersproject/bytes'
 import { getAllWallets, getRecommendedInjectedWallets } from '@/hooks/wallets/wallets'
 import { getRpcServiceUrl } from '@/hooks/wallets/web3'
 import { AppRoutes } from '@/config/routes'
+import type { EnvState } from '@/store/settingsSlice'
 
 export type ConnectedWallet = {
   label: string
@@ -16,7 +17,7 @@ export type ConnectedWallet = {
 
 let onboard: OnboardAPI | null = null
 
-export const createOnboard = (chainConfigs: ChainInfo[]): OnboardAPI => {
+export const createOnboard = (chainConfigs: ChainInfo[], rpcConfig: EnvState['rpc'] | undefined): OnboardAPI => {
   if (onboard) return onboard
 
   const wallets = getAllWallets()
@@ -24,7 +25,7 @@ export const createOnboard = (chainConfigs: ChainInfo[]): OnboardAPI => {
   const chains = chainConfigs.map((cfg) => ({
     id: hexValue(parseInt(cfg.chainId)),
     label: cfg.chainName,
-    rpcUrl: getRpcServiceUrl(cfg.rpcUri),
+    rpcUrl: rpcConfig?.[cfg.chainId] || getRpcServiceUrl(cfg.rpcUri),
     token: cfg.nativeCurrency.symbol,
     color: cfg.theme.backgroundColor,
     publicRpcUrl: cfg.publicRpcUri.value,

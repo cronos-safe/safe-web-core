@@ -1,6 +1,7 @@
-export const enum AbTest {
-  SAFE_CREATION = 'safe_creation',
-}
+/**
+ * Holds current A/B test identifiers.
+ */
+export const enum AbTest {}
 
 let _abTest: AbTest | null = null
 

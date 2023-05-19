@@ -1,21 +1,37 @@
 import NextLink from 'next/link'
-import type { LinkProps } from 'next/link'
+import { useRouter } from 'next/router'
 import type { ReactElement } from 'react'
+import { useMemo } from 'react'
 import ChevronRight from '@mui/icons-material/ChevronRight'
 import type { TransactionSummary } from '@safe-global/safe-gateway-typescript-sdk'
-import { Box } from '@mui/material'
+import { Box, SvgIcon, Typography } from '@mui/material'
 import { isMultisigExecutionInfo } from '@/utils/transaction-guards'
 import TxInfo from '@/components/transactions/TxInfo'
 import TxType from '@/components/transactions/TxType'
 import css from './styles.module.css'
 import classNames from 'classnames'
+import OwnersIcon from '@/public/images/common/owners.svg'
+import { AppRoutes } from '@/config/routes'
 
 type PendingTxType = {
   transaction: TransactionSummary
-  url: LinkProps['href']
 }
 
-const PendingTx = ({ transaction, url }: PendingTxType): ReactElement => {
+const PendingTx = ({ transaction }: PendingTxType): ReactElement => {
+  const router = useRouter()
+  const { id } = transaction
+
+  const url = useMemo(
+    () => ({
+      pathname: AppRoutes.transactions.tx,
+      query: {
+        id,
+        safe: router.query.safe,
+      },
+    }),
+    [router, id],
+  )
+
   return (
     <NextLink href={url} passHref>
       <a>
@@ -35,7 +51,10 @@ const PendingTx = ({ transaction, url }: PendingTxType): ReactElement => {
           <Box gridArea="confirmations">
             {isMultisigExecutionInfo(transaction.executionInfo) ? (
               <Box className={css.confirmationsCount}>
-                {`${transaction.executionInfo.confirmationsSubmitted}/${transaction.executionInfo.confirmationsRequired}`}
+                <SvgIcon component={OwnersIcon} inheritViewBox fontSize="small" />
+                <Typography variant="caption" fontWeight="bold">
+                  {`${transaction.executionInfo.confirmationsSubmitted}/${transaction.executionInfo.confirmationsRequired}`}
+                </Typography>
               </Box>
             ) : (
               <Box flexGrow={1} />

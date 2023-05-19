@@ -47,7 +47,7 @@ const ReviewSpendingLimitTx = ({ params, onSubmit }: TokenTransferModalProps): R
   const txParams: SpendingLimitTxParams = useMemo(
     () => ({
       safeAddress,
-      token: spendingLimit?.token || ZERO_ADDRESS,
+      token: spendingLimit?.token.address || ZERO_ADDRESS,
       to: params.recipient,
       amount: parseUnits(params.amount, token?.tokenInfo.decimals).toString(),
       paymentToken: ZERO_ADDRESS,
@@ -86,7 +86,7 @@ const ReviewSpendingLimitTx = ({ params, onSubmit }: TokenTransferModalProps): R
     try {
       await dispatchSpendingLimitTxExecution(txParams, txOptions, chainId, provider)
 
-      onSubmit('')
+      onSubmit()
     } catch (err) {
       logError(Errors._801, (err as Error).message)
       setIsSubmittable(true)

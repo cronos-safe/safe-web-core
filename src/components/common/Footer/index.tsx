@@ -1,5 +1,6 @@
 import type { SyntheticEvent, ReactElement } from 'react'
-import { Link, Typography } from '@mui/material'
+import { Typography } from '@mui/material'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 import css from './styles.module.css'
 import { useAppDispatch } from '@/store'
@@ -7,9 +8,17 @@ import { openCookieBanner } from '@/store/popupSlice'
 import { AppRoutes } from '@/config/routes'
 import packageJson from '../../../../package.json'
 //import AppstoreButton from '../AppStoreButton'
-import ExternalLink from '../ExternalLink'
+import ExternalLink from '@/components/common/ExternalLink'
+// import MUILink from '@mui/material/Link'
 
-const footerPages = [AppRoutes.welcome, AppRoutes.settings.index]
+const footerPages = [
+  AppRoutes.welcome,
+  AppRoutes.settings.index,
+  AppRoutes.imprint,
+  AppRoutes.privacy,
+  AppRoutes.cookie,
+  AppRoutes.terms,
+]
 
 const Footer = (): ReactElement | null => {
   const router = useRouter()
@@ -31,17 +40,17 @@ const Footer = (): ReactElement | null => {
           <Typography variant="caption">&copy;2022 Cronos</Typography>
         </li>
         <li>
-          <ExternalLink suppressIcon href="https://cronos.org/">
+          <ExternalLink noIcon href="https://cronos.org/">
             Cronos Network
           </ExternalLink>
         </li>
         <li>
-          <ExternalLink suppressIcon href="https://cronos.org/docs/">
+          <ExternalLink noIcon href="https://cronos.org/docs/">
             Cronos Documentation
           </ExternalLink>
         </li>
         <li>
-          <ExternalLink suppressIcon href="https://help.gnosis-safe.io/en/">
+          <ExternalLink noIcon href="https://help.gnosis-safe.io/en/">
             Help Center
           </ExternalLink>
         </li>
@@ -60,12 +69,12 @@ const Footer = (): ReactElement | null => {
           </Link>
         </li>
         <li>
-          <ExternalLink suppressIcon href="/terms">
+          <ExternalLink noIcon href="/terms">
             Disclaimer
           </ExternalLink>
         </li>
         <li>
-          <ExternalLink suppressIcon href={`${packageJson.homepage}/releases/tag/v${packageJson.version}`}>
+          <ExternalLink noIcon href={`${packageJson.homepage}/releases/tag/v${packageJson.version}`}>
             v{packageJson.version}
           </ExternalLink>
         </li>

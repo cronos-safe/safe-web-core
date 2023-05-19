@@ -1,6 +1,6 @@
 import { useEffect, useMemo } from 'react'
+import { formatError } from '@/utils/formatters'
 import type { LinkProps } from 'next/link'
-import { capitalize } from '@/utils/formatters'
 import { selectNotifications, showNotification } from '@/store/notificationsSlice'
 import { useAppDispatch, useAppSelector } from '@/store'
 import { TxEvent, txSubscribe } from '@/services/tx/txEvents'
@@ -13,6 +13,7 @@ import { selectPendingTxs } from '@/store/pendingTxsSlice'
 import useIsGranted from './useIsGranted'
 import useWallet from './wallets/useWallet'
 import useSafeAddress from './useSafeAddress'
+import { getExplorerLink } from '@/utils/gateway'
 
 const TxNotifications = {
   [TxEvent.SIGN_FAILED]: 'Signature failed. Please try again.',
@@ -42,14 +43,6 @@ enum Variant {
 
 const successEvents = [TxEvent.PROPOSED, TxEvent.SIGNATURE_PROPOSED, TxEvent.ONCHAIN_SIGNATURE_SUCCESS, TxEvent.SUCCESS]
 
-// Format the error message
-export const formatError = (error: Error & { reason?: string }): string => {
-  let { reason } = error
-  if (!reason) return ''
-  if (!reason.endsWith('.')) reason += '.'
-  return capitalize(reason)
-}
-
 const getTxLink = (txId: string, chain: ChainInfo, safeAddress: string): { href: LinkProps['href']; title: string } => {
   return {
     href: {
@@ -57,6 +50,14 @@ const getTxLink = (txId: string, chain: ChainInfo, safeAddress: string): { href:
       query: { id: txId, safe: `${chain?.shortName}:${safeAddress}` },
     },
     title: 'View transaction',
+  }
+}
+
+const getTxExplorerLink = (txHash: string, chain: ChainInfo): { href: LinkProps['href']; title: string } => {
+  const { href } = getExplorerLink(txHash, chain.blockExplorerUriTemplate)
+  return {
+    href,
+    title: 'View on explorer',
   }
 }
 
@@ -70,6 +71,8 @@ const useTxNotifications = (): void => {
    */
 
   useEffect(() => {
+    if (!chain) return
+
     const entries = Object.entries(TxNotifications) as [keyof typeof TxNotifications, string][]
 
     const unsubFns = entries.map(([event, baseMessage]) =>
@@ -78,6 +81,7 @@ const useTxNotifications = (): void => {
         const isSuccess = successEvents.includes(event)
         const message = isError ? `${baseMessage} ${formatError(detail.error)}` : baseMessage
         const txId = 'txId' in detail ? detail.txId : undefined
+        const txHash = 'txHash' in detail ? detail.txHash : undefined
         const groupKey = 'groupKey' in detail && detail.groupKey ? detail.groupKey : txId || ''
 
         dispatch(
@@ -86,7 +90,7 @@ const useTxNotifications = (): void => {
             detailedMessage: isError ? detail.error.message : undefined,
             groupKey,
             variant: isError ? Variant.ERROR : isSuccess ? Variant.SUCCESS : Variant.INFO,
-            link: txId && chain ? getTxLink(txId, chain, safeAddress) : undefined,
+            link: txId ? getTxLink(txId, chain, safeAddress) : txHash ? getTxExplorerLink(txHash, chain) : undefined,
           }),
         )
       }),

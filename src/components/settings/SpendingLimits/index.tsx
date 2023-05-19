@@ -2,16 +2,16 @@ import { Paper, Grid, Typography, Box } from '@mui/material'
 import { NoSpendingLimits } from '@/components/settings/SpendingLimits/NoSpendingLimits'
 import { SpendingLimitsTable } from '@/components/settings/SpendingLimits/SpendingLimitsTable'
 import { useSelector } from 'react-redux'
-import { selectSpendingLimits } from '@/store/spendingLimitsSlice'
+import { selectSpendingLimits, selectSpendingLimitsLoading } from '@/store/spendingLimitsSlice'
 import { NewSpendingLimit } from '@/components/settings/SpendingLimits/NewSpendingLimit'
 import { useCurrentChain } from '@/hooks/useChains'
-import { hasFeature } from '@/utils/chains'
-import { FEATURES } from '@safe-global/safe-gateway-typescript-sdk'
+import { FEATURES, hasFeature } from '@/utils/chains'
 import useIsGranted from '@/hooks/useIsGranted'
 
 const SpendingLimits = () => {
   const isGranted = useIsGranted()
   const spendingLimits = useSelector(selectSpendingLimits)
+  const spendingLimitsLoading = useSelector(selectSpendingLimitsLoading)
   const currentChain = useCurrentChain()
   const isEnabled = currentChain && hasFeature(currentChain, FEATURES.SPENDING_LIMIT)
 
@@ -33,15 +33,14 @@ const SpendingLimits = () => {
               </Typography>
 
               {isGranted && <NewSpendingLimit />}
-              {!spendingLimits.length && <NoSpendingLimits />}
+              {!spendingLimits.length && !spendingLimitsLoading && <NoSpendingLimits />}
             </Box>
           ) : (
             <Typography>The spending limit module is not yet available on this chain.</Typography>
           )}
         </Grid>
       </Grid>
-
-      {spendingLimits.length > 0 && <SpendingLimitsTable spendingLimits={spendingLimits} />}
+      <SpendingLimitsTable isLoading={spendingLimitsLoading} spendingLimits={spendingLimits} />
     </Paper>
   )
 }

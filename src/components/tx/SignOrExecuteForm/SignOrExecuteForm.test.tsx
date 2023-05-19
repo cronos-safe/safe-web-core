@@ -90,8 +90,6 @@ describe('SignOrExecuteForm', () => {
     jest
       .spyOn(txSenderDispatch, 'dispatchTxProposal')
       .mockImplementation(jest.fn(() => Promise.resolve({ txId: '0x12' } as TransactionDetails)))
-
-    jest.spyOn(walletUtils, 'shouldUseEthSignMethod').mockImplementation(jest.fn(() => false))
   })
 
   it('displays decoded data if there is a tx', () => {
@@ -180,7 +178,7 @@ describe('SignOrExecuteForm', () => {
       ).not.toBeInTheDocument()
     })
 
-    it('hides the executiuon validation error', () => {
+    it('hides the execution validation error', () => {
       jest.spyOn(useIsValidExecutionHook, 'default').mockReturnValue({
         isValidExecution: undefined,
         executionValidationError: new Error('Error validating execution'),

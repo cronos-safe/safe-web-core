@@ -78,17 +78,20 @@ const useSafeApps = (): ReturnType => {
 
   return {
     allSafeApps,
+    rankedSafeApps,
+
     remoteSafeApps,
+    remoteSafeAppsLoading: remoteSafeAppsLoading || !(remoteSafeApps || remoteSafeAppsError),
+    remoteSafeAppsError,
+
     pinnedSafeApps,
     pinnedSafeAppIds,
+    togglePin,
+
     customSafeApps,
-    rankedSafeApps,
-    remoteSafeAppsLoading,
     customSafeAppsLoading,
-    remoteSafeAppsError,
     addCustomApp,
     removeCustomApp,
-    togglePin,
   }
 }
 

@@ -8,7 +8,7 @@ import useGasLimit from '@/hooks/useGasLimit'
 import useSafeInfo from '@/hooks/useSafeInfo'
 import ErrorMessage from '@/components/tx/ErrorMessage'
 import AdvancedParams, { type AdvancedParameters, useAdvancedParams } from '@/components/tx/AdvancedParams'
-import { isSmartContractWallet, shouldUseEthSignMethod } from '@/hooks/wallets/wallets'
+import { isSmartContractWallet } from '@/hooks/wallets/wallets'
 import DecodedTx from '../DecodedTx'
 import ExecuteCheckbox from '../ExecuteCheckbox'
 import { logError, Errors } from '@/services/exceptions'
@@ -22,11 +22,12 @@ import useIsWrongChain from '@/hooks/useIsWrongChain'
 import useIsSafeOwner from '@/hooks/useIsSafeOwner'
 import { sameString } from '@safe-global/safe-core-sdk/dist/src/utils'
 import useIsValidExecution from '@/hooks/useIsValidExecution'
+import { useHasPendingTxs } from '@/hooks/usePendingTxs'
 
 type SignOrExecuteProps = {
   safeTx?: SafeTransaction
   txId?: string
-  onSubmit: (txId?: string) => void
+  onSubmit: () => void
   children?: ReactNode
   error?: Error
   isExecutable?: boolean
@@ -62,11 +63,12 @@ const SignOrExecuteForm = ({
   const isOwner = useIsSafeOwner()
   const provider = useWeb3()
   const currentChain = useCurrentChain()
+  const hasPending = useHasPendingTxs()
 
   const { createTx, dispatchTxProposal, dispatchOnChainSigning, dispatchTxSigning, dispatchTxExecution } = useTxSender()
 
   // Check that the transaction is executable
-  const isNewExecutableTx = !txId && safe.threshold === 1
+  const isNewExecutableTx = !txId && safe.threshold === 1 && !hasPending
   const isCorrectNonce = tx?.data.nonce === safe.nonce
   const canExecute = isCorrectNonce && (isExecutable || isNewExecutableTx)
 
@@ -142,8 +144,7 @@ const SignOrExecuteForm = ({
     }
 
     // Otherwise, sign off-chain
-    const shouldEthSign = shouldUseEthSignMethod(connectedWallet)
-    const signedTx = await dispatchTxSigning(createdTx, shouldEthSign, txId)
+    const signedTx = await dispatchTxSigning(createdTx, safe.version, txId)
 
     /**
      * We need to handle this case because of the way useTxSender is designed,
@@ -162,11 +163,11 @@ const SignOrExecuteForm = ({
     const [, createdTx, provider] = assertDependencies()
 
     // If no txId was provided, it's an immediate execution of a new tx
+    const id = txId || (await proposeTx(createdTx))
     const txOptions = getTxOptions(advancedParams, currentChain)
+    await dispatchTxExecution(createdTx, provider, txOptions, id)
 
-    await dispatchTxExecution(createdTx, provider, txOptions, txId)
-
-    return txId
+    return id
   }
 
   // On modal submit
@@ -175,9 +176,8 @@ const SignOrExecuteForm = ({
     setIsSubmittable(false)
     setSubmitError(undefined)
 
-    let id: string | undefined
     try {
-      id = await (willExecute ? onExecute() : onSign())
+      await (willExecute ? onExecute() : onSign())
     } catch (err) {
       logError(Errors._804, (err as Error).message)
       setIsSubmittable(true)
@@ -185,7 +185,7 @@ const SignOrExecuteForm = ({
       return
     }
 
-    onSubmit(id)
+    onSubmit()
   }
 
   // On advanced params submit (nonce, gas limit, price, etc)
@@ -238,7 +238,7 @@ const SignOrExecuteForm = ({
 
         <TxSimulation
           gasLimit={advancedParams.gasLimit?.toNumber()}
-          transactions={safeTx}
+          transactions={tx}
           canExecute={canExecute}
           disabled={submitDisabled}
         />

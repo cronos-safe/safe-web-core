@@ -1,18 +1,28 @@
 export const AppRoutes = {
   '404': '/404',
   welcome: '/welcome',
-  open: '/open',
-  load: '/load',
+  terms: '/terms',
+  privacy: '/privacy',
   index: '/',
+  imprint: '/imprint',
   import: '/import',
   home: '/home',
-  apps: '/apps',
+  environmentVariables: '/environment-variables',
+  cookie: '/cookie',
   addressBook: '/address-book',
+  _offline: '/_offline',
+  apps: {
+    open: '/apps/open',
+    index: '/apps',
+    custom: '/apps/custom',
+    bookmarked: '/apps/bookmarked',
+  },
   balances: {
     nfts: '/balances/nfts',
     index: '/balances',
   },
   newSafe: {
+    load: '/new-safe/load',
     create: '/new-safe/create',
   },
   settings: {
@@ -20,6 +30,7 @@ export const AppRoutes = {
     setup: '/settings/setup',
     modules: '/settings/modules',
     index: '/settings',
+    environmentVariables: '/settings/environment-variables',
     data: '/settings/data',
     appearance: '/settings/appearance',
     safeApps: {
@@ -32,8 +43,8 @@ export const AppRoutes = {
   transactions: {
     tx: '/transactions/tx',
     queue: '/transactions/queue',
+    messages: '/transactions/messages',
     index: '/transactions',
     history: '/transactions/history',
   },
-  terms: '/terms',
 }
