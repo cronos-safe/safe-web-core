@@ -37,7 +37,7 @@ const CookieBannerPopup = ({ warningKey }: { warningKey?: CookieType }): ReactEl
   }
 
   const handleAcceptAll = () => {
-    setValue(CookieType.UPDATES, true)
+    // setValue(CookieType.UPDATES, true)
     setValue(CookieType.ANALYTICS, true)
 
     setTimeout(() => {
@@ -65,11 +65,11 @@ const CookieBannerPopup = ({ warningKey }: { warningKey?: CookieType }): ReactEl
           label="Necessary"
         />
 
-        <FormControlLabel
+        {/*<FormControlLabel
           control={<Checkbox {...register(CookieType.UPDATES)} />}
           label="Updates (Beamer)"
           checked={watch(CookieType.UPDATES)}
-        />
+        />*/}
 
         <FormControlLabel
           control={<Checkbox {...register(CookieType.ANALYTICS)} />}
