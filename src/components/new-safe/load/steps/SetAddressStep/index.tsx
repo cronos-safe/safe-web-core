@@ -141,11 +141,11 @@ const SetAddressStep = ({ data, onSubmit, onBack }: StepRenderProps<LoadSafeForm
             By continuing you consent to the{' '}
             <Link href={AppRoutes.terms} passHref>
               <MUILink>terms of use</MUILink>
-            </Link>{' '}
-            and{' '}
+            </Link>
+            {/*{' '}and{' '}
             <Link href={AppRoutes.privacy} passHref>
               <MUILink>privacy policy</MUILink>
-            </Link>
+            </Link>*/}
             .
           </Typography>
         </Box>
