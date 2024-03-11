@@ -28,7 +28,7 @@ const SafeAppDetails = ({ app, showDefaultListWarning }: DetailsProps) => (
     </Box>
     <Divider />
     <Box sx={{ mt: 4 }}>
-      <Typography variant="body1">App URL</Typography>
+      <Typography variant="body1">Safe App URL</Typography>
       <Typography
         variant="body2"
         sx={({ palette, shape }) => ({
@@ -45,9 +45,9 @@ const SafeAppDetails = ({ app, showDefaultListWarning }: DetailsProps) => (
     </Box>
     <Box sx={{ mt: 2 }}>
       <Typography variant="body1">Available networks</Typography>
-      <Box sx={{ display: 'flex', gap: 1, mt: 1, flexWrap: 'wrap' }}>
+      <Box sx={{ display: 'flex', gap: 2, mt: 1, flexWrap: 'wrap' }}>
         {app.chainIds.map((chainId) => (
-          <ChainIndicator key={chainId} chainId={chainId} inline renderWhiteSpaceIfNoChain={false} />
+          <ChainIndicator key={chainId} chainId={chainId} inline showUnknown={false} />
         ))}
       </Box>
     </Box>

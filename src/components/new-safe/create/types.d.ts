@@ -1,4 +1,4 @@
-import type { BigNumber } from 'ethers'
+import type { NewSafeFormData } from '@/components/new-safe/create'
 
 export type NamedAddress = {
   name: string
@@ -6,26 +6,19 @@ export type NamedAddress = {
   ens?: string
 }
 
-// TODO: Split this type up for create and add safe since NamedAddress only makes sense when adding a safe
-export type SafeFormData = NamedAddress & {
-  threshold: number
-  owners: NamedAddress[]
-}
-
 export type PendingSafeTx = {
   data: string
   from: string
   nonce: number
   to: string
-  value: BigNumber
+  value: bigint
   startBlock: number
 }
 
-export type PendingSafeData = SafeFormData & {
+export type PendingSafeData = NewSafeFormData & {
   txHash?: string
   tx?: PendingSafeTx
-  safeAddress?: string
-  saltNonce: number
+  taskId?: string
 }
 
 export type PendingSafeByChain = Record<string, PendingSafeData | undefined>

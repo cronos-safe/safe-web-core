@@ -1,9 +1,10 @@
 import { IS_PRODUCTION } from '@/config/constants'
 import { ContentSecurityPolicy, StrictTransportSecurity } from '@/config/securityHeaders'
-import { lightPalette, darkPalette } from '@safe-global/safe-react-components'
+import lightPalette from '@/components/theme/lightPalette'
+import darkPalette from '@/components/theme/darkPalette'
 
 const descriptionText = 'Cronos Safe is the most trusted platform to manage digital assets on Cronos.'
-const titleText = 'Safe'
+const titleText = 'Cronos Safe'
 
 const MetaTags = ({ prefetchUrl }: { prefetchUrl: string }) => (
   <>

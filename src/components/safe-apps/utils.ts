@@ -1,4 +1,4 @@
-import { isHexString, toUtf8String } from 'ethers/lib/utils'
+import { isHexString, toUtf8String } from 'ethers'
 import { SafeAppAccessPolicyTypes } from '@safe-global/safe-gateway-typescript-sdk'
 import { SafeAppFeatures } from '@safe-global/safe-gateway-typescript-sdk'
 import type { SafeAppData } from '@safe-global/safe-gateway-typescript-sdk'
@@ -97,4 +97,19 @@ export const isOptimizedForBatchTransactions = (safeApp: SafeAppData) =>
 export const filterInternalCategories = (categories: string[]): string[] => {
   const internalCategories = Object.values(SafeAppsTag)
   return categories.filter((tag) => !internalCategories.some((internalCategory) => tag === internalCategory))
+}
+
+// Get unique tags from all apps
+export const getUniqueTags = (apps: SafeAppData[]): string[] => {
+  // Get the list of categories from the safeAppsList
+  const tags = apps.reduce<Set<string>>((result, app) => {
+    app.tags.forEach((tag) => result.add(tag))
+    return result
+  }, new Set())
+
+  // Filter out internal tags
+  const filteredTags = filterInternalCategories(Array.from(tags))
+
+  // Sort alphabetically
+  return filteredTags.sort()
 }

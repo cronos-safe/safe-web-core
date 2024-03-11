@@ -25,6 +25,7 @@ import type {
   Transfer,
   TransferInfo,
 } from '@safe-global/safe-gateway-typescript-sdk'
+import { TransferDirection } from '@safe-global/safe-gateway-typescript-sdk'
 import {
   ConflictType,
   DetailedExecutionInfoType,
@@ -35,8 +36,9 @@ import {
 } from '@safe-global/safe-gateway-typescript-sdk'
 import { getSpendingLimitModuleAddress } from '@/services/contracts/spendingLimitContracts'
 import { sameAddress } from '@/utils/addresses'
-import { getMultiSendCallOnlyContractAddress, getMultiSendContractAddress } from '@/services/contracts/safeContracts'
 import type { NamedAddress } from '@/components/new-safe/create/types'
+import type { RecoveryQueueItem } from '@/features/recovery/services/recovery-state'
+import { ethers } from 'ethers'
 
 export const isTxQueued = (value: TransactionStatus): boolean => {
   return [TransactionStatus.AWAITING_CONFIRMATIONS, TransactionStatus.AWAITING_EXECUTION].includes(value)
@@ -78,16 +80,12 @@ export const isCustomTxInfo = (value: TransactionInfo): value is Custom => {
   return value.type === TransactionInfoType.CUSTOM
 }
 
-export const isSupportedMultiSendAddress = (txInfo: TransactionInfo, chainId: string): boolean => {
-  const toAddress = isCustomTxInfo(txInfo) ? txInfo.to.value : ''
-  const multiSendAddress = getMultiSendContractAddress(chainId)
-  const multiSendCallOnlyAddress = getMultiSendCallOnlyContractAddress(chainId)
-
-  return sameAddress(multiSendAddress, toAddress) || sameAddress(multiSendCallOnlyAddress, toAddress)
-}
-
 export const isMultiSendTxInfo = (value: TransactionInfo): value is MultiSend => {
-  return value.type === TransactionInfoType.CUSTOM && value.methodName === 'multiSend'
+  return (
+    value.type === TransactionInfoType.CUSTOM &&
+    value.methodName === 'multiSend' &&
+    typeof value.actionCount === 'number'
+  )
 }
 
 export const isCancellationTxInfo = (value: TransactionInfo): value is Cancellation => {
@@ -96,6 +94,10 @@ export const isCancellationTxInfo = (value: TransactionInfo): value is Cancellat
 
 export const isCreationTxInfo = (value: TransactionInfo): value is Creation => {
   return value.type === TransactionInfoType.CREATION
+}
+
+export const isOutgoingTransfer = (txInfo: TransactionInfo): boolean => {
+  return isTransferTxInfo(txInfo) && txInfo.direction.toUpperCase() === TransferDirection.OUTGOING
 }
 
 // TransactionListItem type guards
@@ -115,6 +117,11 @@ export const isTransactionListItem = (value: TransactionListItem): value is Tran
   return value.type === TransactionListItemType.TRANSACTION
 }
 
+export function isRecoveryQueueItem(value: TransactionListItem | RecoveryQueueItem): value is RecoveryQueueItem {
+  const EVENT_SIGNATURE = 'TransactionAdded(uint256,bytes32,address,uint256,bytes,uint8)'
+  return 'fragment' in value && ethers.id(EVENT_SIGNATURE) === value.fragment.topicHash
+}
+
 // Narrows `Transaction`
 export const isMultisigExecutionInfo = (value?: ExecutionInfo): value is MultisigExecutionInfo =>
   value?.type === DetailedExecutionInfoType.MULTISIG
@@ -127,6 +134,17 @@ export const isSignableBy = (txSummary: TransactionSummary, walletAddress: strin
   return !!executionInfo?.missingSigners?.some((address) => address.value === walletAddress)
 }
 
+export const isConfirmableBy = (txSummary: TransactionSummary, walletAddress: string): boolean => {
+  if (!txSummary.executionInfo || !isMultisigExecutionInfo(txSummary.executionInfo)) {
+    return false
+  }
+  const { confirmationsRequired, confirmationsSubmitted } = txSummary.executionInfo
+  return (
+    confirmationsSubmitted >= confirmationsRequired ||
+    (confirmationsSubmitted === confirmationsRequired - 1 && isSignableBy(txSummary, walletAddress))
+  )
+}
+
 export const isExecutable = (txSummary: TransactionSummary, walletAddress: string, safe: SafeInfo): boolean => {
   if (
     !txSummary.executionInfo ||
@@ -135,11 +153,7 @@ export const isExecutable = (txSummary: TransactionSummary, walletAddress: strin
   ) {
     return false
   }
-  const { confirmationsRequired, confirmationsSubmitted } = txSummary.executionInfo
-  return (
-    confirmationsSubmitted >= confirmationsRequired ||
-    (confirmationsSubmitted === confirmationsRequired - 1 && isSignableBy(txSummary, walletAddress))
-  )
+  return isConfirmableBy(txSummary, walletAddress)
 }
 
 // Spending limits

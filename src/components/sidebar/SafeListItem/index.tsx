@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactElement } from 'react'
+import { useEffect, useRef, type ReactElement, type ComponentProps } from 'react'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemText from '@mui/material/ListItemText'
 import ListItem from '@mui/material/ListItem'
@@ -22,12 +22,15 @@ import { sameAddress } from '@/utils/addresses'
 import PendingActionButtons from '@/components/sidebar/PendingActions'
 import usePendingActions from '@/hooks/usePendingActions'
 import useOnceVisible from '@/hooks/useOnceVisible'
+import Track from '@/components/common/Track'
+import { OPEN_SAFE_LABELS, OVERVIEW_EVENTS } from '@/services/analytics'
 
 const SafeListItem = ({
   address,
   chainId,
   closeDrawer,
   shouldScrollToSafe,
+  href,
   noActions = false,
   isAdded = false,
   ...rest
@@ -35,6 +38,7 @@ const SafeListItem = ({
   address: string
   chainId: string
   shouldScrollToSafe: boolean
+  href: ComponentProps<typeof Link>['href']
   closeDrawer?: () => void
   threshold?: string | number
   owners?: string | number
@@ -61,6 +65,7 @@ const SafeListItem = ({
 
   return (
     <ListItem
+      data-testid="safe-list-item"
       className={classnames(css.container, { [css.withPendingButtons]: totalQueued || totalToSign })}
       disablePadding
       secondaryAction={
@@ -80,32 +85,42 @@ const SafeListItem = ({
         )
       }
     >
-      <Link href={{ pathname: AppRoutes.home, query: { safe: `${shortName}:${address}` } }} passHref>
-        <ListItemButton
-          key={address}
-          onClick={closeDrawer}
-          selected={isCurrentSafe}
-          className={classnames(css.safe, { [css.open]: isCurrentSafe })}
-          ref={safeRef}
-        >
-          <ListItemIcon>
-            <SafeIcon address={address} {...rest} />
-          </ListItemIcon>
-          <ListItemText
-            sx={noActions ? undefined : { pr: 10 }}
-            primaryTypographyProps={{
-              variant: 'body2',
-              component: 'div',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              overflow: 'hidden',
-            }}
-            secondaryTypographyProps={{ component: 'div', color: 'primary' }}
-            primary={name || ''}
-            secondary={<EthHashInfo address={address} showAvatar={false} showName={false} prefix={shortName} />}
-          />
-        </ListItemButton>
-      </Link>
+      <Track {...OVERVIEW_EVENTS.OPEN_SAFE} label={OPEN_SAFE_LABELS.sidebar}>
+        <Link href={href} passHref legacyBehavior>
+          <ListItemButton
+            key={address}
+            onClick={closeDrawer}
+            selected={isCurrentSafe}
+            className={classnames(css.safe, { [css.open]: isCurrentSafe })}
+            ref={safeRef}
+          >
+            <ListItemIcon>
+              <SafeIcon address={address} {...rest} />
+            </ListItemIcon>
+            <ListItemText
+              sx={noActions ? undefined : { pr: 10 }}
+              primaryTypographyProps={{
+                variant: 'body2',
+                component: 'div',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                overflow: 'hidden',
+              }}
+              secondaryTypographyProps={{ component: 'div', color: 'text.primary' }}
+              primary={name || ''}
+              secondary={
+                <EthHashInfo
+                  address={address}
+                  showAvatar={false}
+                  showName={false}
+                  prefix={shortName}
+                  copyAddress={false}
+                />
+              }
+            />
+          </ListItemButton>
+        </Link>
+      </Track>
 
       <PendingActionButtons
         safeAddress={address}

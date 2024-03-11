@@ -11,11 +11,11 @@ const Load: NextPage = () => {
   return (
     <main>
       <Head>
-        <title>Cronos Safe – Add Safe</title>
+        <title>{'Cronos Safe – Add Safe Account'}</title>
       </Head>
 
       {safeAddress ? (
-        <LoadSafe key={safeAddress} initialData={{ ...loadSafeDefaultData, address: safeAddress }} />
+        <LoadSafe initialData={{ ...loadSafeDefaultData, address: safeAddress }} />
       ) : (
         <LoadSafe initialData={loadSafeDefaultData} />
       )}

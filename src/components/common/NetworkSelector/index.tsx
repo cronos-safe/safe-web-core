@@ -1,101 +1,136 @@
+import ChainIndicator from '@/components/common/ChainIndicator'
+import { useDarkMode } from '@/hooks/useDarkMode'
+import { useTheme } from '@mui/material/styles'
+import { type ChainInfo } from '@safe-global/safe-gateway-typescript-sdk'
+import Link from 'next/link'
 import type { SelectChangeEvent } from '@mui/material'
-import { Chip } from '@mui/material'
-import { MenuItem, Select, Skeleton } from '@mui/material'
+import { ListSubheader, MenuItem, Select, Skeleton, Tooltip } from '@mui/material'
+import partition from 'lodash/partition'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import useChains from '@/hooks/useChains'
 import { useRouter } from 'next/router'
-import ChainIndicator from '../ChainIndicator'
 import css from './styles.module.css'
 import { useChainId } from '@/hooks/useChainId'
-import { getShortName } from '@/utils/chains'
-import type { ReactElement } from 'react'
+import { type ReactElement, forwardRef, useMemo } from 'react'
+import { useCallback } from 'react'
 import { AppRoutes } from '@/config/routes'
 import { trackEvent, OVERVIEW_EVENTS } from '@/services/analytics'
+import useWallet from '@/hooks/wallets/useWallet'
+import { isSocialWalletEnabled } from '@/hooks/wallets/wallets'
+import { isSocialLoginWallet } from '@/services/mpc/SocialLoginModule'
 
-/**
- * The dates when the chain was added to the app
- * Show a "New!" label for two weeks after the chain was added
- */
-const networkAddedDates: Record<string, string> = {
-  'base-gor': '2023-02-24',
-}
-const maxNewDays = 14
+const keepPathRoutes = [AppRoutes.welcome.index, AppRoutes.newSafe.create, AppRoutes.newSafe.load]
 
-const isNetworkNew = (network: string): boolean => {
-  const addedDate = networkAddedDates[network]
-  if (!addedDate) return false
-  const added = new Date(addedDate).getTime()
-  const elapsed = Date.now() - added
-  return elapsed < maxNewDays * 24 * 60 * 60 * 1000
-}
+const MenuWithTooltip = forwardRef<HTMLUListElement>(function MenuWithTooltip(props: any, ref) {
+  return (
+    <Tooltip title="More network support coming soon" arrow placement="left">
+      <ul ref={ref} {...props}>
+        {props.children}
+      </ul>
+    </Tooltip>
+  )
+})
 
-const NetworkSelector = (): ReactElement => {
+const NetworkSelector = (props: { onChainSelect?: () => void }): ReactElement => {
+  const wallet = useWallet()
+  const isDarkMode = useDarkMode()
+  const theme = useTheme()
   const { configs } = useChains()
   const chainId = useChainId()
   const router = useRouter()
 
-  const handleNetworkSwitch = (event: SelectChangeEvent) => {
-    const selectedChainId = event.target.value
-    const newShortName = getShortName(selectedChainId)
+  const [testNets, prodNets] = useMemo(() => partition(configs, (config) => config.isTestnet), [configs])
 
-    if (!newShortName) return
+  const getNetworkLink = useCallback(
+    (shortName: string) => {
+      const shouldKeepPath = keepPathRoutes.includes(router.pathname)
 
-    trackEvent({ ...OVERVIEW_EVENTS.SWITCH_NETWORK, label: selectedChainId })
+      const route = {
+        pathname: shouldKeepPath ? router.pathname : '/',
+        query: {
+          chain: shortName,
+        } as {
+          chain: string
+          safeViewRedirectURL?: string
+        },
+      }
 
-    const shouldKeepPath = [AppRoutes.newSafe.create, AppRoutes.newSafe.load].includes(router.pathname)
+      if (router.query?.safeViewRedirectURL) {
+        route.query.safeViewRedirectURL = router.query?.safeViewRedirectURL.toString()
+      }
 
-    const newRoute = {
-      pathname: shouldKeepPath ? router.pathname : '/',
-      query: {
-        chain: newShortName,
-      } as {
-        chain: string
-        safeViewRedirectURL?: string
-      },
+      return route
+    },
+    [router],
+  )
+
+  const onChange = (event: SelectChangeEvent) => {
+    event.preventDefault() // Prevent the link click
+
+    const newChainId = event.target.value
+    const shortName = configs.find((item) => item.chainId === newChainId)?.shortName
+
+    if (shortName) {
+      trackEvent({ ...OVERVIEW_EVENTS.SWITCH_NETWORK, label: newChainId })
+      router.push(getNetworkLink(shortName))
     }
-
-    if (router.query?.safeViewRedirectURL) {
-      newRoute.query.safeViewRedirectURL = router.query?.safeViewRedirectURL.toString()
-    }
-
-    return router.push(newRoute)
   }
+
+  const isSocialLogin = isSocialLoginWallet(wallet?.label)
+
+  const renderMenuItem = useCallback(
+    (value: string, chain: ChainInfo) => {
+      return (
+        <MenuItem
+          key={value}
+          value={value}
+          className={css.menuItem}
+          disabled={isSocialLogin && !isSocialWalletEnabled(chain)}
+        >
+          <Link href={getNetworkLink(chain.shortName)} onClick={props.onChainSelect} className={css.item}>
+            <ChainIndicator chainId={chain.chainId} inline />
+          </Link>
+        </MenuItem>
+      )
+    },
+    [getNetworkLink, isSocialLogin, props.onChainSelect],
+  )
 
   return configs.length ? (
     <Select
       value={chainId}
-      onChange={handleNetworkSwitch}
+      onChange={onChange}
       size="small"
       className={css.select}
       variant="standard"
       IconComponent={ExpandMoreIcon}
       MenuProps={{
+        transitionDuration: 0,
+        MenuListProps: { component: isSocialLogin ? MenuWithTooltip : undefined },
         sx: {
           '& .MuiPaper-root': {
-            mt: 2,
+            overflow: 'auto',
           },
+          ...(isDarkMode
+            ? {
+                '& .Mui-selected, & .Mui-selected:hover': {
+                  backgroundColor: `${theme.palette.secondary.background} !important`,
+                },
+              }
+            : {}),
         },
       }}
       sx={{
         '& .MuiSelect-select': {
           py: 0,
         },
-        '& svg path': {
-          fill: ({ palette }) => palette.border.main,
-        },
       }}
     >
-      {configs.map((chain) => {
-        return (
-          <MenuItem key={chain.chainId} value={chain.chainId}>
-            <ChainIndicator chainId={chain.chainId} inline />
+      {prodNets.map((chain) => renderMenuItem(chain.chainId, chain))}
 
-            {isNetworkNew(chain.shortName) && (
-              <Chip label="New!" size="small" color="secondary" className={css.newChip} />
-            )}
-          </MenuItem>
-        )
-      })}
+      <ListSubheader className={css.listSubHeader}>Testnets</ListSubheader>
+
+      {testNets.map((chain) => renderMenuItem(chain.chainId, chain))}
     </Select>
   ) : (
     <Skeleton width={94} height={31} sx={{ mx: 2 }} />

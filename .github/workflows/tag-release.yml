@@ -8,37 +8,33 @@ on:
 
 jobs:
   tag-release:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        if: github.event.pull_request.merged == true
         with:
           fetch-depth: 0
 
       - name: Extract version
-        if: github.event.pull_request.merged == true
         id: version
         run: |
           NEW_VERSION=$(node -p 'require("./package.json").version')
           echo "version=v$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "${{ github.event.pull_request.body }}" > CHANGELOG.md
 
       - name: Create a git tag
-        if: github.event.pull_request.merged == true
-        run: git tag $NEW_VERSION && git push --tags
-        env:
-          NEW_VERSION: ${{ steps.version.outputs.version }}
+        if: steps.version.outputs.version
+        run: git tag ${{ steps.version.outputs.version }} && git push --tags
 
       - name: GitHub release
-        if: success()
-        uses: actions/create-release@v1
+        if: steps.version.outputs.version
+        uses: softprops/action-gh-release@v1
         id: create_release
         with:
           draft: true
           prerelease: false
-          release_name: ${{ steps.version.outputs.version }}
+          name: ${{ steps.version.outputs.version }}
           tag_name: ${{ steps.version.outputs.version }}
-          body_path: CHANGELOG.md
+          body: ${{ github.event.pull_request.body }}
         env:
           GITHUB_TOKEN: ${{ github.token }}

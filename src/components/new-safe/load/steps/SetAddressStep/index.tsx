@@ -69,13 +69,13 @@ const SetAddressStep = ({ data, onSubmit, onBack }: StepRenderProps<LoadSafeForm
 
   const validateSafeAddress = async (address: string) => {
     if (addedSafes && Object.keys(addedSafes).includes(address)) {
-      return 'Safe is already added'
+      return 'Safe Account is already added'
     }
 
     try {
       await getSafeInfo(currentChainId, address)
     } catch (error) {
-      return 'Address given is not a valid Safe address'
+      return 'Address given is not a valid Safe Account address'
     }
   }
 
@@ -135,15 +135,15 @@ const SetAddressStep = ({ data, onSubmit, onBack }: StepRenderProps<LoadSafeForm
             </Grid>
           </Grid>
 
-          <AddressInput label="Safe" validate={validateSafeAddress} name={Field.address} />
+          <AddressInput label="Safe Account" validate={validateSafeAddress} name={Field.address} />
 
           <Typography mt={4}>
             By continuing you consent to the{' '}
-            <Link href={AppRoutes.terms} passHref>
+            <Link href={AppRoutes.terms} passHref legacyBehavior>
               <MUILink>terms of use</MUILink>
-            </Link>
-            {/*{' '}and{' '}
-            <Link href={AppRoutes.privacy} passHref>
+            </Link>{' '}
+            {/*and{' '}
+            <Link href={AppRoutes.privacy} passHref legacyBehavior>
               <MUILink>privacy policy</MUILink>
             </Link>*/}
             .
@@ -157,7 +157,13 @@ const SetAddressStep = ({ data, onSubmit, onBack }: StepRenderProps<LoadSafeForm
             <Button variant="outlined" size="small" onClick={handleBack} startIcon={<ArrowBackIcon fontSize="small" />}>
               Back
             </Button>
-            <Button type="submit" variant="contained" size="stretched" disabled={!isValid}>
+            <Button
+              data-testid="load-safe-next-btn"
+              type="submit"
+              variant="contained"
+              size="stretched"
+              disabled={!isValid}
+            >
               Next
             </Button>
           </Box>

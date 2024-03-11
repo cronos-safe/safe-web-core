@@ -1,4 +1,5 @@
 import type { ReactElement } from 'react'
+import dynamic from 'next/dynamic'
 import { Grid } from '@mui/material'
 import PendingTxsList from '@/components/dashboard/PendingTxs/PendingTxsList'
 import Overview from '@/components/dashboard/Overview/Overview'
@@ -7,25 +8,43 @@ import SafeAppsDashboardSection from '@/components/dashboard/SafeAppsDashboardSe
 import GovernanceSection from '@/components/dashboard/GovernanceSection/GovernanceSection'
 import CreationDialog from '@/components/dashboard/CreationDialog'
 import { useRouter } from 'next/router'
+import { CREATION_MODAL_QUERY_PARM } from '../new-safe/create/logic'
+
+import useRecovery from '@/features/recovery/hooks/useRecovery'
+import { useIsRecoverySupported } from '@/features/recovery/hooks/useIsRecoverySupported'
+const RecoveryHeader = dynamic(() => import('@/features/recovery/components/RecoveryHeader'))
+const RecoveryWidget = dynamic(() => import('@/features/recovery/components/RecoveryWidget'))
 
 const Dashboard = (): ReactElement => {
   const router = useRouter()
-  const { showCreationModal = '' } = router.query
+  const { [CREATION_MODAL_QUERY_PARM]: showCreationModal = '' } = router.query
+
+  const supportsRecovery = useIsRecoverySupported()
+  const [recovery] = useRecovery()
+  const showRecoveryWidget = supportsRecovery && !recovery
 
   return (
     <>
       <Grid container spacing={3}>
-        <Grid item xs={12} md={12} lg={6}>
+        {supportsRecovery && <RecoveryHeader />}
+
+        <Grid item xs={12} lg={6}>
           <Overview />
         </Grid>
 
-        <Grid item xs={12} md={12} lg={6}>
-          <PendingTxsList size={4} />
+        <Grid item xs={12} lg={6}>
+          <PendingTxsList />
         </Grid>
 
-        <Grid item xs={12}>
-          <FeaturedApps />
+        <Grid item xs={12} lg={showRecoveryWidget ? 6 : undefined}>
+          <FeaturedApps stackedLayout={!!showRecoveryWidget} />
         </Grid>
+
+        {showRecoveryWidget ? (
+          <Grid item xs={12} lg={6}>
+            <RecoveryWidget />
+          </Grid>
+        ) : null}
 
         <Grid item xs={12}>
           <GovernanceSection />

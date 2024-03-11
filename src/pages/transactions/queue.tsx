@@ -6,32 +6,29 @@ import TxHeader from '@/components/transactions/TxHeader'
 import BatchExecuteButton from '@/components/transactions/BatchExecuteButton'
 import { Box } from '@mui/material'
 import { BatchExecuteHoverProvider } from '@/components/transactions/BatchExecuteButton/BatchExecuteHoverProvider'
-import TxNavigation from '../../components/transactions/TxNavigation'
-import { useHasPendingTxs, usePendingTxsQueue } from '@/hooks/usePendingTxs'
+import { usePendingTxsQueue, useShowUnsignedQueue } from '@/hooks/usePendingTxs'
+import RecoveryList from '@/features/recovery/components/RecoveryList'
 
 const Queue: NextPage = () => {
-  const hasPending = useHasPendingTxs()
+  const showPending = useShowUnsignedQueue()
 
   return (
     <>
       <Head>
-        <title>Safe – Transaction queue</title>
+        <title>{'Safe{Wallet} – Transaction queue'}</title>
       </Head>
 
       <BatchExecuteHoverProvider>
-        <TxHeader
-          action={
-            <Box display="flex" justifyContent="space-between" alignItems="center">
-              <TxNavigation />
-              <BatchExecuteButton />
-            </Box>
-          }
-        />
+        <TxHeader>
+          <BatchExecuteButton />
+        </TxHeader>
 
         <main>
           <Box mb={4}>
+            <RecoveryList />
+
             {/* Pending unsigned transactions */}
-            {hasPending && <PaginatedTxns useTxns={usePendingTxsQueue} />}
+            {showPending && <PaginatedTxns useTxns={usePendingTxsQueue} />}
 
             {/* The main queue of signed transactions */}
             <PaginatedTxns useTxns={useTxQueue} />

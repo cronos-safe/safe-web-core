@@ -1,27 +1,25 @@
-import { useState, useCallback } from 'react'
+import { useCallback } from 'react'
 import type { SafeAppData } from '@safe-global/safe-gateway-typescript-sdk'
-import classnames from 'classnames'
 
-import SafeAppsFilters from '@/components/safe-apps/SafeAppsFilters'
-import SafeAppCard, { GRID_VIEW_MODE } from '@/components/safe-apps/SafeAppCard'
-import type { SafeAppsViewMode } from '@/components/safe-apps/SafeAppCard'
+import SafeAppCard from '@/components/safe-apps/SafeAppCard'
 import AddCustomSafeAppCard from '@/components/safe-apps/AddCustomSafeAppCard'
 import SafeAppPreviewDrawer from '@/components/safe-apps/SafeAppPreviewDrawer'
 import SafeAppsListHeader from '@/components/safe-apps/SafeAppsListHeader'
 import SafeAppsZeroResultsPlaceholder from '@/components/safe-apps/SafeAppsZeroResultsPlaceholder'
-import useSafeAppsFilters from '@/hooks/safe-apps/useSafeAppsFilters'
 import useSafeAppPreviewDrawer from '@/hooks/safe-apps/useSafeAppPreviewDrawer'
 import css from './styles.module.css'
 import { Skeleton } from '@mui/material'
+import { useOpenedSafeApps } from '@/hooks/safe-apps/useOpenedSafeApps'
 
 type SafeAppListProps = {
   safeAppsList: SafeAppData[]
   safeAppsListLoading?: boolean
   bookmarkedSafeAppsId?: Set<number>
   onBookmarkSafeApp?: (safeAppId: number) => void
-  showFilters?: boolean
   addCustomApp?: (safeApp: SafeAppData) => void
   removeCustomApp?: (safeApp: SafeAppData) => void
+  title: string
+  query?: string
 }
 
 const SafeAppList = ({
@@ -29,56 +27,34 @@ const SafeAppList = ({
   safeAppsListLoading,
   bookmarkedSafeAppsId,
   onBookmarkSafeApp,
-  showFilters,
   addCustomApp,
   removeCustomApp,
+  title,
+  query,
 }: SafeAppListProps) => {
-  const [safeAppsViewMode, setSafeAppsViewMode] = useState<SafeAppsViewMode>(GRID_VIEW_MODE)
   const { isPreviewDrawerOpen, previewDrawerApp, openPreviewDrawer, closePreviewDrawer } = useSafeAppPreviewDrawer()
+  const { openedSafeAppIds } = useOpenedSafeApps()
 
-  const { filteredApps, query, setQuery, setSelectedCategories, setOptimizedWithBatchFilter, selectedCategories } =
-    useSafeAppsFilters(safeAppsList)
-
-  const showZeroResultsPlaceholder = query && filteredApps.length === 0
+  const showZeroResultsPlaceholder = query && safeAppsList.length === 0
 
   const handleSafeAppClick = useCallback(
     (safeApp: SafeAppData) => {
       const isCustomApp = safeApp.id < 1
 
-      if (isCustomApp) return
+      if (isCustomApp || openedSafeAppIds.includes(safeApp.id)) return
 
       return () => openPreviewDrawer(safeApp)
     },
-    [openPreviewDrawer],
+    [openPreviewDrawer, openedSafeAppIds],
   )
 
   return (
     <>
-      {/* Safe Apps Filters */}
-      {showFilters && (
-        <SafeAppsFilters
-          onChangeQuery={setQuery}
-          onChangeFilterCategory={setSelectedCategories}
-          onChangeOptimizedWithBatch={setOptimizedWithBatchFilter}
-          selectedCategories={selectedCategories}
-          safeAppsList={safeAppsList}
-        />
-      )}
-
       {/* Safe Apps List Header */}
-      <SafeAppsListHeader
-        amount={filteredApps.length}
-        safeAppsViewMode={safeAppsViewMode}
-        setSafeAppsViewMode={setSafeAppsViewMode}
-      />
+      <SafeAppsListHeader title={title} amount={safeAppsList.length} />
 
-      {/* Safe App List */}
-      <ul
-        className={classnames(
-          css.safeAppsContainer,
-          safeAppsViewMode === GRID_VIEW_MODE ? css.safeAppsGridViewContainer : css.safeAppsListViewContainer,
-        )}
-      >
+      {/* Safe Apps List */}
+      <ul className={css.safeAppsContainer}>
         {/* Add Custom Safe App Card */}
         {addCustomApp && (
           <li>
@@ -93,20 +69,19 @@ const SafeAppList = ({
             </li>
           ))}
 
-        {filteredApps.map((safeApp) => {
-          return (
-            <li key={safeApp.id}>
-              <SafeAppCard
-                safeApp={safeApp}
-                viewMode={safeAppsViewMode}
-                isBookmarked={bookmarkedSafeAppsId?.has(safeApp.id)}
-                onBookmarkSafeApp={onBookmarkSafeApp}
-                removeCustomApp={removeCustomApp}
-                onClickSafeApp={handleSafeAppClick(safeApp)}
-              />
-            </li>
-          )
-        })}
+        {/* Flat list filtered by search query */}
+        {safeAppsList.map((safeApp) => (
+          <li key={safeApp.id}>
+            <SafeAppCard
+              safeApp={safeApp}
+              isBookmarked={bookmarkedSafeAppsId?.has(safeApp.id)}
+              onBookmarkSafeApp={onBookmarkSafeApp}
+              removeCustomApp={removeCustomApp}
+              onClickSafeApp={handleSafeAppClick(safeApp)}
+              openPreviewDrawer={openPreviewDrawer}
+            />
+          </li>
+        ))}
       </ul>
 
       {/* Zero results placeholder */}

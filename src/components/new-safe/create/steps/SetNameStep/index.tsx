@@ -17,6 +17,7 @@ import ExternalLink from '@/components/common/ExternalLink'
 // import { AppRoutes } from '@/config/routes'
 // import MUILink from '@mui/material/Link'
 // import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 type SetNameStepForm = {
   name: string
@@ -34,6 +35,7 @@ function SetNameStep({
   setStep,
   setSafeName,
 }: StepRenderProps<NewSafeFormData> & { setSafeName: (name: string) => void }) {
+  const router = useRouter()
   const fallbackName = useMnemonicSafeName()
   const isWrongChain = useIsWrongChain()
   useSyncSafeCreationStep(setStep)
@@ -58,6 +60,11 @@ function SetNameStep({
     if (data.name) {
       trackEvent(CREATE_SAFE_EVENTS.NAME_SAFE)
     }
+  }
+
+  const onCancel = () => {
+    trackEvent(CREATE_SAFE_EVENTS.CANCEL_CREATE_SAFE_FORM)
+    router.push(AppRoutes.welcome.index)
   }
 
   const isDisabled = isWrongChain || !isValid
@@ -106,8 +113,11 @@ function SetNameStep({
         </Box>
         <Divider />
         <Box className={layoutCss.row}>
-          <Box display="flex" flexDirection="row" justifyContent="flex-end" gap={3}>
-            <Button type="submit" variant="contained" size="stretched" disabled={isDisabled}>
+          <Box display="flex" flexDirection="row" justifyContent="space-between" gap={3}>
+            <Button data-testid="cancel-btn" variant="outlined" onClick={onCancel} size="small">
+              Cancel
+            </Button>
+            <Button data-testid="next-btn" type="submit" variant="contained" size="stretched" disabled={isDisabled}>
               Next
             </Button>
           </Box>

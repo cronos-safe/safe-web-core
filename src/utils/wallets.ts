@@ -1,50 +1,61 @@
-import { ProviderLabel } from '@web3-onboard/injected-wallets'
-//import { hasStoredPairingSession } from '@/services/pairing/connector'
-//import { PAIRING_MODULE_LABEL } from '@/services/pairing/module'
-import { E2E_WALLET_NAME } from '@/tests/e2e-wallet'
 import type { EthersError } from '@/utils/ethers-utils'
-import { ErrorCode } from '@ethersproject/logger'
+import { type ConnectedWallet } from '@/hooks/wallets/useOnboard'
+import { getWeb3ReadOnly, isSmartContract } from '@/hooks/wallets/web3'
+import { WALLET_KEYS } from '@/hooks/wallets/consts'
+import memoize from 'lodash/memoize'
+import { ONBOARD_MPC_MODULE_LABEL } from '@/services/mpc/SocialLoginModule'
 
 const isWCRejection = (err: Error): boolean => {
   return /rejected/.test(err?.message)
 }
 
 const isEthersRejection = (err: EthersError): boolean => {
-  return err.code === ErrorCode.ACTION_REJECTED
+  return err.code === 'ACTION_REJECTED'
 }
 
 export const isWalletRejection = (err: EthersError | Error): boolean => {
   return isEthersRejection(err as EthersError) || isWCRejection(err)
 }
 
-export const WalletNames = {
-  METAMASK: ProviderLabel.MetaMask,
-  WALLET_CONNECT: 'WalletConnect',
-  //  SAFE_MOBILE_PAIRING: PAIRING_MODULE_LABEL,
+export const isLedger = (wallet: ConnectedWallet): boolean => {
+  return wallet.label.toUpperCase() === WALLET_KEYS.LEDGER
 }
 
+export const isHardwareWallet = (wallet: ConnectedWallet): boolean => {
+  return [WALLET_KEYS.LEDGER, WALLET_KEYS.TREZOR, WALLET_KEYS.KEYSTONE].includes(
+    wallet.label.toUpperCase() as WALLET_KEYS,
+  )
+}
+
+export const isSmartContractWallet = memoize(
+  async (_chainId: string, address: string) => {
+    const provider = getWeb3ReadOnly()
+
+    if (!provider) {
+      throw new Error('Provider not found')
+    }
+
+    return isSmartContract(provider, address)
+  },
+  (chainId, address) => chainId + address,
+)
+
 /* Check if the wallet is unlocked. */
-export const isWalletUnlocked = async (walletName: string): Promise<boolean> => {
-  if (typeof window === 'undefined') return false
+export const isWalletUnlocked = async (walletName: string): Promise<boolean | undefined> => {
+  const METAMASK = 'MetaMask'
 
   // Only MetaMask exposes a method to check if the wallet is unlocked
-  if (walletName === WalletNames.METAMASK) {
-    return window.ethereum?._metamask?.isUnlocked?.() || false
+  if (walletName === METAMASK) {
+    if (typeof window === 'undefined' || !window.ethereum?._metamask) return false
+    try {
+      return await window.ethereum?._metamask.isUnlocked()
+    } catch {
+      return false
+    }
   }
 
-  // Wallet connect creates a localStorage entry when connected and removes it when disconnected
-  if (walletName === WalletNames.WALLET_CONNECT) {
-    return window.localStorage.getItem('walletconnect') !== null
+  // Don't reconnect to MPC wallet because it's not initialized right away
+  if (walletName === ONBOARD_MPC_MODULE_LABEL) {
+    return false
   }
-
-  // Our own Safe mobile pairing module
-  /* if (walletName === WalletNames.SAFE_MOBILE_PAIRING && hasStoredPairingSession()) {
-    return hasStoredPairingSession()
-  } */
-
-  if (walletName === E2E_WALLET_NAME) {
-    return Boolean(window.Cypress)
-  }
-
-  return false
 }

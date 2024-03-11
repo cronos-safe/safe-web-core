@@ -1,15 +1,11 @@
-import * as Sentry from '@sentry/react'
-import type { CaptureContext } from '@sentry/types'
+import { sentryCaptureException } from '@/services/sentry'
 import { IS_PRODUCTION } from '@/config/constants'
 import ErrorCodes from './ErrorCodes'
+import { asError } from './utils'
 
 export class CodedException extends Error {
   public readonly code: number
   public readonly content: string
-  // the context allows to enrich events, for the list of allowed context keys/data, please check the type or go to
-  // https://docs.sentry.io/platforms/javascript/enriching-events/context/
-  // The context is not searchable, that means its goal is just to provide additional data for the error
-  public readonly context?: CaptureContext
 
   private getCode(content: ErrorCodes): number {
     const codePrefix = content.split(':')[0]
@@ -20,14 +16,13 @@ export class CodedException extends Error {
     return code
   }
 
-  constructor(content: ErrorCodes, extraMessage?: string, context?: CaptureContext) {
+  constructor(content: ErrorCodes, thrown?: unknown) {
     super()
 
-    const extraInfo = extraMessage ? ` (${extraMessage})` : ''
+    const extraInfo = thrown ? ` (${asError(thrown).message})` : ''
     this.message = `Code ${content}${extraInfo}`
     this.code = this.getCode(content)
     this.content = content
-    this.context = context
   }
 
   public log(): void {
@@ -50,12 +45,12 @@ export class CodedException extends Error {
     this.log()
 
     if (IS_PRODUCTION) {
-      Sentry.captureException(this, this.context)
+      sentryCaptureException(this)
     }
   }
 }
 
-type ErrorHandler = (content: ErrorCodes, extraMessage?: string, context?: CaptureContext) => CodedException
+type ErrorHandler = (content: ErrorCodes, thrown?: unknown) => CodedException
 
 export const logError: ErrorHandler = function logError(...args) {
   const error = new CodedException(...args)

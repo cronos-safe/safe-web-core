@@ -1,41 +1,27 @@
-import { Box, CircularProgress } from '@mui/material'
-import { useRouter } from 'next/router'
-import { useSafeAppUrl } from '@/hooks/safe-apps/useSafeAppUrl'
-import { useChainFromQueryParams } from '@/hooks/safe-apps/useChainFromQueryParams'
-import { SafeAppLanding } from '@/components/safe-apps/SafeAppLandingPage'
-import { AppRoutes } from '@/config/routes'
 import Head from 'next/head'
+import { Box, CircularProgress } from '@mui/material'
+import { useSafeAppUrl } from '@/hooks/safe-apps/useSafeAppUrl'
+import { SafeAppLanding } from '@/components/safe-apps/SafeAppLandingPage'
+import { useCurrentChain } from '@/hooks/useChains'
 
 const ShareSafeApp = () => {
-  const router = useRouter()
   const appUrl = useSafeAppUrl()
-  const { chain, validChain, loading: chainLoading, error: chainError } = useChainFromQueryParams()
-
-  if (chainLoading) {
-    return (
-      <Box py={4} textAlign="center">
-        <CircularProgress size={40} />
-      </Box>
-    )
-  }
-
-  if (!appUrl || !validChain || !chain) {
-    router.push(AppRoutes.index)
-    return null
-  }
-
-  if (chainError) {
-    throw new Error(chainError)
-  }
+  const chain = useCurrentChain()
 
   return (
     <>
       <Head>
-        <title>Safe Apps – Share</title>
+        <title>{`Safe{Wallet} – Safe Apps`}</title>
       </Head>
 
       <main>
-        <SafeAppLanding appUrl={appUrl} chain={chain} />
+        {appUrl && chain ? (
+          <SafeAppLanding appUrl={appUrl} chain={chain} />
+        ) : (
+          <Box py={4} textAlign="center">
+            <CircularProgress size={40} />
+          </Box>
+        )}
       </main>
     </>
   )

@@ -1,53 +1,44 @@
-import { useState, type ReactElement } from 'react'
+import { useContext, useEffect, useState, type ReactElement } from 'react'
 import classnames from 'classnames'
 
-import Header from '@/components/common//Header'
+import Header from '@/components/common/Header'
 import css from './styles.module.css'
 import SafeLoadingError from '../SafeLoadingError'
 import Footer from '../Footer'
 import SideDrawer from './SideDrawer'
-import { AppRoutes } from '@/config/routes'
-import useDebounce from '@/hooks/useDebounce'
-
-const isNoSidebarRoute = (pathname: string): boolean => {
-  return [
-    AppRoutes.share.safeApp,
-    AppRoutes.newSafe.create,
-    AppRoutes.newSafe.load,
-    AppRoutes.welcome,
-    AppRoutes.index,
-    AppRoutes.import,
-    AppRoutes.environmentVariables,
-    AppRoutes.imprint,
-    AppRoutes.privacy,
-    AppRoutes.cookie,
-    AppRoutes.terms,
-  ].includes(pathname)
-}
+import { useIsSidebarRoute } from '@/hooks/useIsSidebarRoute'
+import { TxModalContext } from '@/components/tx-flow'
+import BatchSidebar from '@/components/batch/BatchSidebar'
 
 const PageLayout = ({ pathname, children }: { pathname: string; children: ReactElement }): ReactElement => {
-  const noSidebar = isNoSidebarRoute(pathname)
+  const [isSidebarRoute, isAnimated] = useIsSidebarRoute(pathname)
   const [isSidebarOpen, setSidebarOpen] = useState<boolean>(true)
-  let isAnimated = useDebounce(!noSidebar, 300)
-  if (noSidebar) isAnimated = false
+  const [isBatchOpen, setBatchOpen] = useState<boolean>(false)
+  const { setFullWidth } = useContext(TxModalContext)
+
+  useEffect(() => {
+    setFullWidth(!isSidebarOpen)
+  }, [isSidebarOpen, setFullWidth])
 
   return (
     <>
       <header className={css.header}>
-        <Header onMenuToggle={noSidebar ? undefined : setSidebarOpen} />
+        <Header onMenuToggle={isSidebarRoute ? setSidebarOpen : undefined} onBatchToggle={setBatchOpen} />
       </header>
 
-      {!noSidebar && <SideDrawer isOpen={isSidebarOpen} onToggle={setSidebarOpen} />}
+      {isSidebarRoute && <SideDrawer isOpen={isSidebarOpen} onToggle={setSidebarOpen} />}
 
       <div
         className={classnames(css.main, {
-          [css.mainNoSidebar]: noSidebar || !isSidebarOpen,
-          [css.mainAnimated]: isAnimated,
+          [css.mainNoSidebar]: !isSidebarOpen || !isSidebarRoute,
+          [css.mainAnimated]: isSidebarRoute && isAnimated,
         })}
       >
         <div className={css.content}>
           <SafeLoadingError>{children}</SafeLoadingError>
         </div>
+
+        <BatchSidebar isOpen={isBatchOpen} onToggle={setBatchOpen} />
 
         <Footer />
       </div>

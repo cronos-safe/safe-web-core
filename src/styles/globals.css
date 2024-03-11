@@ -1,6 +1,6 @@
 @import url(./vars.css);
 @import url(./onboard.css);
-@import url(../../node_modules/@safe-global/safe-react-components/dist/fonts.css);
+@import url(/fonts/fonts.css);
 
 html,
 body {
@@ -60,6 +60,22 @@ input[type='number'] {
   fill: var(--color-logo-background);
 }
 
+.illustration-background-warning-fill {
+  fill: var(--color-warning-background);
+}
+
+.illustration-background-paper-fill {
+  fill: var(--color-background-paper);
+}
+
+.illustration-secondary-light-fill {
+  fill: var(--color-secondary-light);
+}
+
+.illustration-text-primary-fill {
+  fill: var(--color-text-primary);
+}
+
 /* Note: a fallback `stroke` property must be on the svg to work */
 .illustration-main-stroke {
   stroke: var(--color-primary-main);
@@ -69,11 +85,15 @@ input[type='number'] {
   stroke: var(--color-border-main);
 }
 
+.illustration-very-light-stroke {
+  stroke: var(--color-border-light);
+}
+
 .illustration-background-stroke {
   stroke: var(--color-logo-background);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 599.95px) {
   .sticky {
     position: sticky;
     right: 0;

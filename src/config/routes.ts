@@ -1,16 +1,16 @@
 export const AppRoutes = {
   '404': '/404',
-  welcome: '/welcome',
+  _offline: '/_offline',
+  wc: '/wc',
   terms: '/terms',
   privacy: '/privacy',
+  licenses: '/licenses',
   index: '/',
   imprint: '/imprint',
-  import: '/import',
   home: '/home',
-  environmentVariables: '/environment-variables',
   cookie: '/cookie',
   addressBook: '/address-book',
-  _offline: '/_offline',
+  addOwner: '/addOwner',
   apps: {
     open: '/apps/open',
     index: '/apps',
@@ -26,12 +26,14 @@ export const AppRoutes = {
     create: '/new-safe/create',
   },
   settings: {
-    spendingLimits: '/settings/spending-limits',
     setup: '/settings/setup',
+    securityLogin: '/settings/security-login',
+    notifications: '/settings/notifications',
     modules: '/settings/modules',
     index: '/settings',
     environmentVariables: '/settings/environment-variables',
     data: '/settings/data',
+    cookies: '/settings/cookies',
     appearance: '/settings/appearance',
     safeApps: {
       index: '/settings/safe-apps',
@@ -46,5 +48,9 @@ export const AppRoutes = {
     messages: '/transactions/messages',
     index: '/transactions',
     history: '/transactions/history',
+  },
+  welcome: {
+    socialLogin: '/welcome/social-login',
+    index: '/welcome',
   },
 }

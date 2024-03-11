@@ -27,8 +27,8 @@ export const MODALS_EVENTS = {
     action: 'Estimation',
     category: MODALS_CATEGORY,
   },
-  EXECUTE_TX: {
-    action: 'Execute transaction',
+  TOGGLE_EXECUTE_TX: {
+    action: 'Toggle execute transaction',
     category: MODALS_CATEGORY,
   },
   USE_SPENDING_LIMIT: {
@@ -40,8 +40,22 @@ export const MODALS_EVENTS = {
     action: 'Simulate transaction',
     category: MODALS_CATEGORY,
   },
-  REJECT_TX: {
-    action: 'Reject transaction',
+  EDIT_APPROVALS: {
+    action: 'Edit approval',
     category: MODALS_CATEGORY,
   },
+  ACCEPT_RISK: {
+    action: 'Accept transaction risk',
+    category: MODALS_CATEGORY,
+  },
+  REDEFINE_RESULT: {
+    action: 'Redefine scan result',
+    category: MODALS_CATEGORY,
+    event: EventType.META,
+  },
+}
+
+export enum MODAL_NAVIGATION {
+  Next = 'Next click',
+  Back = 'Back click',
 }

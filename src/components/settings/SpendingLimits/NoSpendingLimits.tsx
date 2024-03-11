@@ -8,7 +8,7 @@ export const NoSpendingLimits = () => {
   return (
     <Grid mt={2} container direction="row" justifyContent="space-between" spacing={2}>
       <Grid item sm={2}>
-        <BeneficiaryIcon />
+        <BeneficiaryIcon data-testid="beneficiary-icon" />
       </Grid>
       <Grid item sm={10}>
         <Typography>
@@ -16,22 +16,22 @@ export const NoSpendingLimits = () => {
         </Typography>
         <Typography>
           Choose an account that will benefit from this allowance. The beneficiary does not have to be an owner of this
-          Safe
+          Safe Account
         </Typography>
       </Grid>
 
       <Grid item sm={2}>
-        <AssetAmountIcon />
+        <AssetAmountIcon data-testid="asset-icon" />
       </Grid>
       <Grid item sm={10}>
         <Typography>
           <b>Select asset and amount</b>
         </Typography>
-        <Typography>You can set allowances for any asset stored in your Safe</Typography>
+        <Typography>You can set allowances for any asset stored in your Safe Account</Typography>
       </Grid>
 
       <Grid item sm={2}>
-        <TimeIcon />
+        <TimeIcon data-testid="time-icon" />
       </Grid>
       <Grid item sm={10}>
         <Typography>

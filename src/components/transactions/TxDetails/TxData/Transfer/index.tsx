@@ -7,35 +7,48 @@ import { Box, Typography } from '@mui/material'
 import React from 'react'
 
 import TransferActions from '@/components/transactions/TxDetails/TxData/Transfer/TransferActions'
+import UntrustedTxWarning from '@/components/transactions/UntrustedTxWarning'
 
 type TransferTxInfoProps = {
   txInfo: Transfer
   txStatus: TransactionStatus
 }
 
-const TransferTxInfoSummary = ({ txInfo, txStatus }: TransferTxInfoProps) => {
+const TransferTxInfoSummary = ({ txInfo, txStatus, trusted }: TransferTxInfoProps & { trusted: boolean }) => {
   const { direction } = txInfo
 
   return (
-    <Typography>
-      {direction === TransferDirection.INCOMING ? 'Received' : isTxQueued(txStatus) ? 'Send' : 'Sent'}{' '}
-      <b>
-        <TransferTx info={txInfo} withLogo={false} omitSign />
-      </b>
-      {direction === TransferDirection.INCOMING ? ' from:' : ' to:'}
-    </Typography>
+    <Box display="flex" flexDirection="row" alignItems="center" gap={1}>
+      <Typography>
+        {direction === TransferDirection.INCOMING ? 'Received' : isTxQueued(txStatus) ? 'Send' : 'Sent'}{' '}
+        <b>
+          <TransferTx info={txInfo} withLogo={false} omitSign />
+        </b>
+        {direction === TransferDirection.INCOMING ? ' from:' : ' to:'}
+      </Typography>
+      {!trusted && <UntrustedTxWarning />}
+    </Box>
   )
 }
 
-const TransferTxInfo = ({ txInfo, txStatus }: TransferTxInfoProps) => {
-  const address =
-    txInfo.direction.toUpperCase() === TransferDirection.INCOMING ? txInfo.sender.value : txInfo.recipient.value
+const TransferTxInfo = ({ txInfo, txStatus, trusted }: TransferTxInfoProps & { trusted: boolean }) => {
+  const address = txInfo.direction.toUpperCase() === TransferDirection.INCOMING ? txInfo.sender : txInfo.recipient
+
   return (
-    <Box>
-      <TransferTxInfoSummary txInfo={txInfo} txStatus={txStatus} />
+    <Box display="flex" flexDirection="column" gap={1}>
+      <TransferTxInfoSummary txInfo={txInfo} txStatus={txStatus} trusted={trusted} />
+
       <Box display="flex" alignItems="center">
-        <EthHashInfo address={address} shortAddress={false} hasExplorer showCopyButton>
-          <TransferActions address={address} txInfo={txInfo} />
+        <EthHashInfo
+          address={address.value}
+          name={address.name}
+          customAvatar={address.logoUri}
+          shortAddress={false}
+          hasExplorer
+          showCopyButton
+          trusted={trusted}
+        >
+          <TransferActions address={address.value} txInfo={txInfo} trusted={trusted} />
         </EthHashInfo>
       </Box>
     </Box>

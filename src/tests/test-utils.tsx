@@ -1,11 +1,14 @@
 import type { RenderHookOptions } from '@testing-library/react'
 import { render, renderHook } from '@testing-library/react'
 import type { NextRouter } from 'next/router'
-import { RouterContext } from 'next/dist/shared/lib/router-context'
+import { RouterContext } from 'next/dist/shared/lib/router-context.shared-runtime'
 import type { Theme } from '@mui/material/styles'
 import { ThemeProvider } from '@mui/material/styles'
-import { SafeThemeProvider } from '@safe-global/safe-react-components'
+import SafeThemeProvider from '@/components/theme/SafeThemeProvider'
 import type { RootState } from '@/store'
+import * as web3 from '@/hooks/wallets/web3'
+import { type JsonRpcProvider, AbiCoder } from 'ethers'
+import { id } from 'ethers'
 
 const mockRouter = (props: Partial<NextRouter> = {}): NextRouter => ({
   asPath: '/',
@@ -17,6 +20,7 @@ const mockRouter = (props: Partial<NextRouter> = {}): NextRouter => ({
     off: jest.fn(),
     emit: jest.fn(),
   },
+
   isFallback: false,
   isLocaleDomain: true,
   isPreview: true,
@@ -28,6 +32,7 @@ const mockRouter = (props: Partial<NextRouter> = {}): NextRouter => ({
   replace: jest.fn(() => Promise.resolve(true)),
   route: '/',
   query: {},
+  forward: () => void 0,
   ...props,
 })
 
@@ -75,9 +80,59 @@ function customRenderHook<Result, Props>(
   return renderHook(render, { wrapper, ...options })
 }
 
+type MockCallImplementation = {
+  signature: string
+  returnType: string
+  returnValue: unknown
+}
+
+/**
+ * Creates a getWeb3 spy which returns a Web3Provider with a mocked `call` and `resolveName` function.
+ *
+ * @param callImplementations list of supported function calls and the mocked return value. i.e.
+ * ```
+ * [{
+ *   signature: "balanceOf(address)",
+ *   returnType: "uint256",
+ *   returnValue: "200"
+ * }]
+ * ```
+ * @param resolveName mock ens resolveName implementation
+ * @returns web3provider jest spy
+ */
+const mockWeb3Provider = (
+  callImplementations: MockCallImplementation[],
+  resolveName?: (name: string) => string,
+): jest.SpyInstance<any, unknown[]> => {
+  return jest.spyOn(web3, 'getWeb3ReadOnly').mockImplementation(
+    () =>
+      ({
+        call: (tx: { data: string; to: string }) => {
+          {
+            const matchedImplementation = callImplementations.find((implementation) => {
+              return tx.data.startsWith(id(implementation.signature).slice(0, 10))
+            })
+
+            if (!matchedImplementation) {
+              throw new Error(`No matcher for call data: ${tx.data}`)
+            }
+
+            return AbiCoder.defaultAbiCoder().encode(
+              [matchedImplementation.returnType],
+              [matchedImplementation.returnValue],
+            )
+          }
+        },
+        _isProvider: true,
+        resolveName: resolveName,
+      } as unknown as JsonRpcProvider),
+  )
+}
+
 // re-export everything
 export * from '@testing-library/react'
 
 // override render method
 export { customRender as render }
 export { customRenderHook as renderHook }
+export { mockWeb3Provider }

@@ -1,29 +1,25 @@
-// TODO: Upgrade onboard/core once https://github.com/blocknative/web3-onboard/issues/1385 is fixed
-import Onboard, { type EIP1193Provider, type OnboardAPI } from '@web3-onboard/core'
+import Onboard, { type OnboardAPI } from '@web3-onboard/core'
 import type { ChainInfo } from '@safe-global/safe-gateway-typescript-sdk'
-import { hexValue } from '@ethersproject/bytes'
-import { getAllWallets, getRecommendedInjectedWallets } from '@/hooks/wallets/wallets'
+import { getAllWallets } from '@/hooks/wallets/wallets'
 import { getRpcServiceUrl } from '@/hooks/wallets/web3'
 import { AppRoutes } from '@/config/routes'
 import type { EnvState } from '@/store/settingsSlice'
-
-export type ConnectedWallet = {
-  label: string
-  chainId: string
-  address: string
-  ens?: string
-  provider: EIP1193Provider
-}
+import { numberToHex } from '@/utils/hex'
 
 let onboard: OnboardAPI | null = null
 
-export const createOnboard = (chainConfigs: ChainInfo[], rpcConfig: EnvState['rpc'] | undefined): OnboardAPI => {
+export const createOnboard = (
+  chainConfigs: ChainInfo[],
+  currentChain: ChainInfo,
+  rpcConfig: EnvState['rpc'] | undefined,
+): OnboardAPI => {
   if (onboard) return onboard
 
-  const wallets = getAllWallets()
+  const wallets = getAllWallets(currentChain)
 
   const chains = chainConfigs.map((cfg) => ({
-    id: hexValue(parseInt(cfg.chainId)),
+    // We cannot use ethers' toBeHex here as we do not want to pad it to an even number of characters.
+    id: numberToHex(parseInt(cfg.chainId)),
     label: cfg.chainName,
     rpcUrl: rpcConfig?.[cfg.chainId] || getRpcServiceUrl(cfg.rpcUri),
     token: cfg.nativeCurrency.symbol,
@@ -42,15 +38,23 @@ export const createOnboard = (chainConfigs: ChainInfo[], rpcConfig: EnvState['rp
       desktop: { enabled: false },
     },
 
+    notify: {
+      enabled: false,
+    },
+
     appMetadata: {
-      name: 'Safe',
-      icon: '/images/safe-logo-green.png',
+      name: 'Cronos Safe',
+      icon: location.origin + '/images/logo-round.svg',
       agreement: {
         termsUrl: window.location.origin + AppRoutes.terms,
         version: '1.0.0',
       },
-      description: 'Please select a wallet to connect to Safe',
-      recommendedInjectedWallets: getRecommendedInjectedWallets(),
+      description: 'Please select a wallet to connect to Cronos Safe',
+    },
+
+    connect: {
+      removeWhereIsMyWalletWarning: true,
+      autoConnectLastWallet: false,
     },
   })
 

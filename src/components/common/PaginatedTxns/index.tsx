@@ -12,6 +12,8 @@ import { type TxFilter, useTxFilter } from '@/utils/tx-history-filter'
 import { isTransactionListItem } from '@/utils/transaction-guards'
 import NoTransactionsIcon from '@/public/images/transactions/no-transactions.svg'
 import { useHasPendingTxs } from '@/hooks/usePendingTxs'
+import useSafeInfo from '@/hooks/useSafeInfo'
+import { useRecoveryQueue } from '@/features/recovery/hooks/useRecoveryQueue'
 
 const NoQueuedTxns = () => {
   return <PagePlaceholder img={<NoTransactionsIcon />} text="Queued transactions will appear here" />
@@ -37,6 +39,7 @@ const TxPage = ({
   const { page, error, loading } = useTxns(pageUrl)
   const [filter] = useTxFilter()
   const isQueue = useTxns === useTxQueue
+  const recoveryQueue = useRecoveryQueue()
   const hasPending = useHasPendingTxs()
 
   return (
@@ -49,7 +52,7 @@ const TxPage = ({
 
       {page && page.results.length > 0 && <TxList items={page.results} />}
 
-      {isQueue && page?.results.length === 0 && !hasPending && <NoQueuedTxns />}
+      {isQueue && page?.results.length === 0 && recoveryQueue.length === 0 && !hasPending && <NoQueuedTxns />}
 
       {error && <ErrorMessage>Error loading transactions</ErrorMessage>}
 
@@ -68,11 +71,12 @@ const TxPage = ({
 const PaginatedTxns = ({ useTxns }: { useTxns: typeof useTxHistory | typeof useTxQueue }): ReactElement => {
   const [pages, setPages] = useState<string[]>([''])
   const [filter] = useTxFilter()
+  const { safeAddress, safe } = useSafeInfo()
 
-  // Reset the pages when the filter changes
+  // Reset the pages when the Safe Account or filter changes
   useEffect(() => {
     setPages([''])
-  }, [filter, useTxns])
+  }, [filter, safe.chainId, safeAddress, useTxns])
 
   // Trigger the next page load
   const onNextPage = (pageUrl: string) => {

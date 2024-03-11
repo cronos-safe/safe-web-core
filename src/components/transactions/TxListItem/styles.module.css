@@ -1,5 +1,5 @@
-.accordion * {
-  border-width: 1px;
+.listItem {
+  border-color: transparent;
 }
 
 .closed:hover,
