@@ -123,10 +123,10 @@ export const CookieBanner = ({
                 </Button>
               </Grid>
             </Grid>
-          </Grid >
-        </Grid >
-      </form >
-    </Paper >
+          </Grid>
+        </Grid>
+      </form>
+    </Paper>
   )
 }
 
