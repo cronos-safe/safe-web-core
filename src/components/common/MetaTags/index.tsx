@@ -9,6 +9,7 @@ const titleText = 'Cronos Safe'
 const MetaTags = ({ prefetchUrl }: { prefetchUrl: string }) => (
   <>
     <meta name="description" content={descriptionText} />
+    {!IS_PRODUCTION && <meta name="robots" content="noindex" />}
 
     {/* Social sharing */}
     <meta name="og:image" content="/images/social-share.png" />
