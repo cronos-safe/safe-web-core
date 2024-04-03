@@ -56,7 +56,7 @@ export const CookieBanner = ({
 
   const handleAcceptAll = () => {
     // setValue(CookieType.UPDATES, true)
-    setValue(CookieType.ANALYTICS, true)
+    //setValue(CookieType.ANALYTICS, true)
     setTimeout(handleAccept, 300)
   }
 
@@ -92,7 +92,7 @@ export const CookieBanner = ({
                   />
                   <br />
                   <Typography variant="body2">New features and product announcements</Typography>
-                </Box> */}
+                </Box>
 
                 <Box>
                   <CookieCheckbox
@@ -104,7 +104,7 @@ export const CookieBanner = ({
                   <Typography variant="body2">
                     Opt in for Google Analytics cookies to help us analyze app usage patterns.
                   </Typography>
-                </Box>
+                </Box> */}
               </Grid>
             </Grid>
 
