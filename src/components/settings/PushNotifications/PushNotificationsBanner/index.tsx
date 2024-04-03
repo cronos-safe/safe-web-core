@@ -122,11 +122,11 @@ export const PushNotificationsBanner = ({ children }: { children: ReactElement }
   const isSafeRegistered = getPreferences(safe.chainId, safeAddress)
   const shouldShowBanner = useDebounce(
     isNotificationFeatureEnabled &&
-      !isPushNotificationBannerDismissed &&
-      isSafeAdded &&
-      !isSafeRegistered &&
-      !!wallet &&
-      safe.deployed,
+    !isPushNotificationBannerDismissed &&
+    isSafeAdded &&
+    !isSafeRegistered &&
+    !!wallet &&
+    safe.deployed,
     BANNER_DELAY,
   )
 
@@ -196,8 +196,7 @@ export const PushNotificationsBanner = ({ children }: { children: ReactElement }
               </IconButton>
               <Typography mt={0.5} mb={1.5} variant="body2">
                 Get notified about pending signatures, incoming and outgoing transactions for all Safe Accounts on{' '}
-                {chain?.chainName} when Safe
-                {`{Wallet}`} is in the background or closed.
+                {chain?.chainName} when Cronos Safe is in the background or closed.
               </Typography>
               {/* Cannot wrap singular button as it causes style inconsistencies */}
               <CheckWallet>
