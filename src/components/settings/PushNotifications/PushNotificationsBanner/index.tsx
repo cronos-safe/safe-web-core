@@ -122,11 +122,11 @@ export const PushNotificationsBanner = ({ children }: { children: ReactElement }
   const isSafeRegistered = getPreferences(safe.chainId, safeAddress)
   const shouldShowBanner = useDebounce(
     isNotificationFeatureEnabled &&
-    !isPushNotificationBannerDismissed &&
-    isSafeAdded &&
-    !isSafeRegistered &&
-    !!wallet &&
-    safe.deployed,
+      !isPushNotificationBannerDismissed &&
+      isSafeAdded &&
+      !isSafeRegistered &&
+      !!wallet &&
+      safe.deployed,
     BANNER_DELAY,
   )
 
