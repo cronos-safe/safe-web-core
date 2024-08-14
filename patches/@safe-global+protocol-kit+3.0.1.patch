@@ -1,0 +1,20 @@
+diff --git a/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js b/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
+index cfc40d8..10149a4 100644
+--- a/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
++++ b/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
+@@ -50,6 +50,7 @@ exports.networks = [
+     { chainId: 250n, shortName: 'ftm' },
+     { chainId: 255n, shortName: 'kroma' },
+     { chainId: 280n, shortName: 'zksync-goerli' },
++    { chainId: 282n, shortName: 'zkTCRO' },
+     { chainId: 288n, shortName: 'boba' },
+     { chainId: 291n, shortName: 'orderly' },
+     { chainId: 300n, shortName: 'ogn' },
+@@ -58,6 +59,7 @@ exports.networks = [
+     { chainId: 324n, shortName: 'zksync' },
+     { chainId: 336n, shortName: 'sdn' },
+     { chainId: 338n, shortName: 'tcro' },
++    { chainId: 388n, shortName: 'zkCRO' },
+     { chainId: 420n, shortName: 'ogor' },
+     { chainId: 424n, shortName: 'PNG' },
+     { chainId: 570n, shortName: 'sys-rollux' },

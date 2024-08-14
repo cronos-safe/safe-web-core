@@ -33,8 +33,11 @@ const ChainLogos = {
   [chains.arb1]: '/images/networks/arb.svg',
   [chains.avax]: '/images/networks/avax.svg',
   [chains.sep]: '/images/networks/sep.png',
+
   [chains.cro]: '/images/networks/cronos.png',
   [chains.tcro]: '/images/networks/cronos.png',
+  [chains.zkTCRO]: '/images/networks/cronosZkTestnet.png',
+  [chains.zkCRO]: '/images/networks/cronosZkMainnet.png',
 }
 
 export const getChainLogo = (chainId: string) => {
