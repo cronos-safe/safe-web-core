@@ -1,5 +1,27 @@
+diff --git a/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js b/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js
+index 5697b18..378055e 100644
+--- a/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js
++++ b/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js
+@@ -16,6 +16,8 @@ const safeDeploymentContracts_1 = require("../contracts/safeDeploymentContracts"
+ exports.PREDETERMINED_SALT_NONCE = '0xb1073742015cbcf5a3a4d9d1ae33ecf619439710b89475f92e2abd2117e90f90';
+ const ZKSYNC_MAINNET = 324n;
+ const ZKSYNC_TESTNET = 280n;
++const ZK_CRO_MAINNET = 388n;
++const ZK_CRO_TESTNET = 282n;
+ // For bundle size efficiency we store SafeProxy.sol/GnosisSafeProxy.sol zksync bytecode hash in hex.
+ // To get the values below we need to:
+ // 1. Compile Safe smart contracts for zksync
+@@ -133,7 +135,7 @@ async function predictSafeAddress({ ethAdapter, chainId, safeAccountConfig, safe
+     const input = ethAdapter.encodeParameters(['address'], [await safeContract.getAddress()]);
+     const from = await safeProxyFactoryContract.getAddress();
+     // On the zkSync Era chain, the counterfactual deployment address is calculated differently
+-    const isZkSyncEraChain = [ZKSYNC_MAINNET, ZKSYNC_TESTNET].includes(chainId);
++    const isZkSyncEraChain = [ZKSYNC_MAINNET, ZKSYNC_TESTNET, ZK_CRO_MAINNET, ZK_CRO_TESTNET].includes(chainId);
+     if (isZkSyncEraChain) {
+         const proxyAddress = zkSyncEraCreate2Address(from, safeVersion, salt, input);
+         return ethAdapter.getChecksummedAddress(proxyAddress);
 diff --git a/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js b/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
-index cfc40d8..10149a4 100644
+index cfc40d8..a112091 100644
 --- a/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
 +++ b/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
 @@ -50,6 +50,7 @@ exports.networks = [
