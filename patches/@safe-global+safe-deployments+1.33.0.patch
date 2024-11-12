@@ -1,8 +1,13 @@
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/compatibility_fallback_handler.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/compatibility_fallback_handler.json
-index d423f92..db4bd57 100644
+index d423f92..2a7c7dd 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/compatibility_fallback_handler.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/compatibility_fallback_handler.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
+         "169": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
+         "204": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
++        "240": "0x2f870a80647BbC554F3a0EBD093f11B4d2a7492A",
+         "246": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
          "250": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
          "255": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
          "280": "0x2f870a80647BbC554F3a0EBD093f11B4d2a7492A",
@@ -10,7 +15,7 @@ index d423f92..db4bd57 100644
          "288": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
          "291": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
          "300": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0x2f870a80647BbC554F3a0EBD093f11B4d2a7492A",
          "336": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
          "338": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
@@ -19,10 +24,15 @@ index d423f92..db4bd57 100644
          "424": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
          "570": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/create_call.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/create_call.json
-index 84006c7..1a01510 100644
+index 84006c7..162f3ed 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/create_call.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/create_call.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
+         "169": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
+         "204": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
++        "240": "0xcB8e5E438c5c2b45FbE17B02Ca9aF91509a8ad56",
+         "246": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
          "250": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
          "255": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
          "280": "0xcB8e5E438c5c2b45FbE17B02Ca9aF91509a8ad56",
@@ -30,7 +40,7 @@ index 84006c7..1a01510 100644
          "288": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
          "291": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
          "300": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0xcB8e5E438c5c2b45FbE17B02Ca9aF91509a8ad56",
          "336": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
          "338": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
@@ -39,10 +49,15 @@ index 84006c7..1a01510 100644
          "424": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
          "570": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe.json
-index 21c5bfa..f0b528f 100644
+index 21c5bfa..2fe3d00 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
+         "169": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+         "204": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
++        "240": "0xB00ce5CCcdEf57e539ddcEd01DF43a13855d9910",
+         "246": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
          "250": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
          "255": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
          "280": "0xB00ce5CCcdEf57e539ddcEd01DF43a13855d9910",
@@ -50,7 +65,7 @@ index 21c5bfa..f0b528f 100644
          "288": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
          "291": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
          "300": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0xB00ce5CCcdEf57e539ddcEd01DF43a13855d9910",
          "336": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
          "338": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
@@ -59,10 +74,15 @@ index 21c5bfa..f0b528f 100644
          "424": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
          "570": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe_l2.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe_l2.json
-index dcf6761..2ace094 100644
+index dcf6761..5677500 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe_l2.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/gnosis_safe_l2.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+         "169": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+         "204": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
++        "240": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
+         "246": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
          "250": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
          "255": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
          "280": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
@@ -70,7 +90,7 @@ index dcf6761..2ace094 100644
          "288": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
          "291": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
          "300": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
          "336": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
          "338": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -79,10 +99,15 @@ index dcf6761..2ace094 100644
          "424": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
          "570": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send.json
-index 3af5136..f6b7846 100644
+index 3af5136..46ca13d 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
+         "169": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
+         "204": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
++        "240": "0x0dFcccB95225ffB03c6FBB2559B530C2B7C8A912",
+         "246": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
          "250": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
          "255": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
          "280": "0x0dFcccB95225ffB03c6FBB2559B530C2B7C8A912",
@@ -90,7 +115,7 @@ index 3af5136..f6b7846 100644
          "288": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
          "291": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
          "300": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0x0dFcccB95225ffB03c6FBB2559B530C2B7C8A912",
          "336": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
          "338": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
@@ -99,10 +124,15 @@ index 3af5136..f6b7846 100644
          "424": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
          "570": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send_call_only.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send_call_only.json
-index 8aa9c29..feda792 100644
+index 8aa9c29..dc36eaa 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send_call_only.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/multi_send_call_only.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
+         "169": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
+         "204": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
++        "240": "0xf220D3b4DFb23C4ade8C88E526C1353AbAcbC38F",
+         "246": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
          "250": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
          "255": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
          "280": "0xf220D3b4DFb23C4ade8C88E526C1353AbAcbC38F",
@@ -110,7 +140,7 @@ index 8aa9c29..feda792 100644
          "288": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
          "291": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
          "300": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0xf220D3b4DFb23C4ade8C88E526C1353AbAcbC38F",
          "336": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
          "338": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
@@ -119,10 +149,15 @@ index 8aa9c29..feda792 100644
          "424": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
          "570": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/proxy_factory.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/proxy_factory.json
-index d3bc7ee..87c2f9c 100644
+index d3bc7ee..63bb6d2 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/proxy_factory.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/proxy_factory.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
+         "169": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
+         "204": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
++        "240": "0xDAec33641865E4651fB43181C6DB6f7232Ee91c2",
+         "246": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
          "250": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
          "255": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
          "280": "0xDAec33641865E4651fB43181C6DB6f7232Ee91c2",
@@ -130,7 +165,7 @@ index d3bc7ee..87c2f9c 100644
          "288": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
          "291": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
          "300": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0xDAec33641865E4651fB43181C6DB6f7232Ee91c2",
          "336": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
          "338": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
@@ -139,10 +174,15 @@ index d3bc7ee..87c2f9c 100644
          "424": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
          "570": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/sign_message_lib.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/sign_message_lib.json
-index 2dee411..2988e19 100644
+index 2dee411..38ebb6d 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/sign_message_lib.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/sign_message_lib.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
+         "169": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
+         "204": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
++        "240": "0x357147caf9C0cCa67DfA0CF5369318d8193c8407",
+         "246": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
          "250": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
          "255": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
          "280": "0x357147caf9C0cCa67DfA0CF5369318d8193c8407",
@@ -150,7 +190,7 @@ index 2dee411..2988e19 100644
          "288": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
          "291": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
          "300": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0x357147caf9C0cCa67DfA0CF5369318d8193c8407",
          "336": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
          "338": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
@@ -159,10 +199,15 @@ index 2dee411..2988e19 100644
          "424": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
          "570": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
 diff --git a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/simulate_tx_accessor.json b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/simulate_tx_accessor.json
-index de3da81..c6fd6cc 100644
+index de3da81..637176b 100644
 --- a/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/simulate_tx_accessor.json
 +++ b/node_modules/@safe-global/safe-deployments/dist/assets/v1.3.0/simulate_tx_accessor.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+         "155": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
+         "169": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
+         "204": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
++        "240": "0x4191E2e12E8BC5002424CE0c51f9947b02675a44",
+         "246": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
          "250": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
          "255": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
          "280": "0x4191E2e12E8BC5002424CE0c51f9947b02675a44",
@@ -170,7 +215,7 @@ index de3da81..c6fd6cc 100644
          "288": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
          "291": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
          "300": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
          "324": "0x4191E2e12E8BC5002424CE0c51f9947b02675a44",
          "336": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
          "338": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
@@ -179,10 +224,15 @@ index de3da81..c6fd6cc 100644
          "424": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
          "570": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/compatibility_fallback_handler.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/compatibility_fallback_handler.json
-index 8b74dd7..1262a2c 100644
+index 8b74dd7..708e223 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/compatibility_fallback_handler.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/compatibility_fallback_handler.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
+     "169": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
+     "204": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
++    "240": "0x2f870a80647BbC554F3a0EBD093f11B4d2a7492A",
+     "246": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
      "250": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
      "255": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
      "280": "0x2f870a80647BbC554F3a0EBD093f11B4d2a7492A",
@@ -190,7 +240,7 @@ index 8b74dd7..1262a2c 100644
      "288": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
      "291": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
      "300": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0x2f870a80647BbC554F3a0EBD093f11B4d2a7492A",
      "336": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
      "338": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
@@ -199,10 +249,15 @@ index 8b74dd7..1262a2c 100644
      "424": "0xf48f2B2d2a534e402487b3ee7C18c33Aec0Fe5e4",
      "570": "0x017062a1dE2FE6b99BE3d9d37841FeD19F573804",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/create_call.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/create_call.json
-index 523004b..424b2a5 100644
+index 523004b..bc89136 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/create_call.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/create_call.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
+     "169": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
+     "204": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
++    "240": "0xcB8e5E438c5c2b45FbE17B02Ca9aF91509a8ad56",
+     "246": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
      "250": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
      "255": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
      "280": "0xcB8e5E438c5c2b45FbE17B02Ca9aF91509a8ad56",
@@ -210,7 +265,7 @@ index 523004b..424b2a5 100644
      "288": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
      "291": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
      "300": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0xcB8e5E438c5c2b45FbE17B02Ca9aF91509a8ad56",
      "336": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
      "338": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
@@ -219,10 +274,15 @@ index 523004b..424b2a5 100644
      "424": "0x7cbB62EaA69F79e6873cD1ecB2392971036cFAa4",
      "570": "0xB19D6FFc2182150F8Eb585b79D4ABcd7C5640A9d",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe.json
-index 6fceb73..8313d63 100644
+index 6fceb73..63a618d 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
+     "169": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+     "204": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
++    "240": "0xB00ce5CCcdEf57e539ddcEd01DF43a13855d9910",
+     "246": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
      "250": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
      "255": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
      "280": "0xB00ce5CCcdEf57e539ddcEd01DF43a13855d9910",
@@ -230,7 +290,7 @@ index 6fceb73..8313d63 100644
      "288": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
      "291": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
      "300": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0xB00ce5CCcdEf57e539ddcEd01DF43a13855d9910",
      "336": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
      "338": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
@@ -239,10 +299,15 @@ index 6fceb73..8313d63 100644
      "424": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
      "570": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe_l2.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe_l2.json
-index f54aa4c..3b73f69 100644
+index f54aa4c..5a19351 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe_l2.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/gnosis_safe_l2.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+     "169": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+     "204": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
++    "240": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
+     "246": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
      "250": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
      "255": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
      "280": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
@@ -250,7 +315,7 @@ index f54aa4c..3b73f69 100644
      "288": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
      "291": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
      "300": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
      "336": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
      "338": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
@@ -259,10 +324,15 @@ index f54aa4c..3b73f69 100644
      "424": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
      "570": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send.json
-index 6052ec8..19fadb1 100644
+index 6052ec8..f6b5fcc 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
+     "169": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
+     "204": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
++    "240": "0x0dFcccB95225ffB03c6FBB2559B530C2B7C8A912",
+     "246": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
      "250": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
      "255": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
      "280": "0x0dFcccB95225ffB03c6FBB2559B530C2B7C8A912",
@@ -270,7 +340,7 @@ index 6052ec8..19fadb1 100644
      "288": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
      "291": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
      "300": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0x0dFcccB95225ffB03c6FBB2559B530C2B7C8A912",
      "336": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
      "338": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
@@ -279,10 +349,15 @@ index 6052ec8..19fadb1 100644
      "424": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
      "570": "0x998739BFdAAdde7C933B942a68053933098f9EDa",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send_call_only.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send_call_only.json
-index d536030..9824546 100644
+index d536030..528fdb8 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send_call_only.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/multi_send_call_only.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
+     "169": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
+     "204": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
++    "240": "0xf220D3b4DFb23C4ade8C88E526C1353AbAcbC38F",
+     "246": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
      "250": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
      "255": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
      "280": "0xf220D3b4DFb23C4ade8C88E526C1353AbAcbC38F",
@@ -290,7 +365,7 @@ index d536030..9824546 100644
      "288": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
      "291": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
      "300": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0xf220D3b4DFb23C4ade8C88E526C1353AbAcbC38F",
      "336": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
      "338": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
@@ -299,10 +374,15 @@ index d536030..9824546 100644
      "424": "0x40A2aCCbd92BCA938b02010E17A5b8929b49130D",
      "570": "0xA1dabEF33b3B82c7814B6D82A79e50F4AC44102B",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/proxy_factory.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/proxy_factory.json
-index 17f188a..4933117 100644
+index 17f188a..8fe68f9 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/proxy_factory.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/proxy_factory.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
+     "169": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
+     "204": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
++    "240": "0xDAec33641865E4651fB43181C6DB6f7232Ee91c2",
+     "246": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
      "250": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
      "255": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
      "280": "0xDAec33641865E4651fB43181C6DB6f7232Ee91c2",
@@ -310,7 +390,7 @@ index 17f188a..4933117 100644
      "288": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
      "291": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
      "300": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0xDAec33641865E4651fB43181C6DB6f7232Ee91c2",
      "336": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
      "338": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
@@ -319,10 +399,15 @@ index 17f188a..4933117 100644
      "424": "0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2",
      "570": "0xC22834581EbC8527d974F8a1c97E1bEA4EF910BC",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/sign_message_lib.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/sign_message_lib.json
-index c948553..a53fd99 100644
+index c948553..4719d58 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/sign_message_lib.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/sign_message_lib.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
+     "169": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
+     "204": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
++    "240": "0x357147caf9C0cCa67DfA0CF5369318d8193c8407",
+     "246": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
      "250": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
      "255": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
      "280": "0x357147caf9C0cCa67DfA0CF5369318d8193c8407",
@@ -330,7 +415,7 @@ index c948553..a53fd99 100644
      "288": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
      "291": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
      "300": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0x357147caf9C0cCa67DfA0CF5369318d8193c8407",
      "336": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
      "338": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
@@ -339,10 +424,15 @@ index c948553..a53fd99 100644
      "424": "0xA65387F16B013cf2Af4605Ad8aA5ec25a2cbA3a2",
      "570": "0x98FFBBF51bb33A056B08ddf711f289936AafF717",
 diff --git a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/simulate_tx_accessor.json b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/simulate_tx_accessor.json
-index 37cb00d..acd6ae8 100644
+index 37cb00d..d0f29ad 100644
 --- a/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/simulate_tx_accessor.json
 +++ b/node_modules/@safe-global/safe-deployments/src/assets/v1.3.0/simulate_tx_accessor.json
-@@ -50,6 +50,7 @@
+@@ -46,10 +46,12 @@
+     "155": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
+     "169": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
+     "204": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
++    "240": "0x4191E2e12E8BC5002424CE0c51f9947b02675a44",
+     "246": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
      "250": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
      "255": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
      "280": "0x4191E2e12E8BC5002424CE0c51f9947b02675a44",
@@ -350,7 +440,7 @@ index 37cb00d..acd6ae8 100644
      "288": "0x727a77a074D1E6c4530e814F89E618a3298FC044",
      "291": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
      "300": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
-@@ -58,6 +59,7 @@
+@@ -58,6 +60,7 @@
      "324": "0x4191E2e12E8BC5002424CE0c51f9947b02675a44",
      "336": "0x59AD6735bCd8152B84860Cb256dD9e96b85F69Da",
      "338": "0x727a77a074D1E6c4530e814F89E618a3298FC044",

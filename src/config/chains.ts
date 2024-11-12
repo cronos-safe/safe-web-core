@@ -37,6 +37,7 @@ const ChainLogos = {
   [chains.cro]: '/images/networks/cronos.png',
   [chains.tcro]: '/images/networks/cronos.png',
   [chains.zkTCRO]: '/images/networks/cronosZkTestnet.png',
+  [chains[`deprecated-zkTCRO`]]: '/images/networks/cronosZkTestnet.png',
   [chains.zkCRO]: '/images/networks/cronosZkMainnet.png',
 }
 

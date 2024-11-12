@@ -1,38 +1,44 @@
 diff --git a/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js b/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js
-index 5697b18..378055e 100644
+index 5697b18..8ce5873 100644
 --- a/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js
 +++ b/node_modules/@safe-global/protocol-kit/dist/src/contracts/utils.js
-@@ -16,6 +16,8 @@ const safeDeploymentContracts_1 = require("../contracts/safeDeploymentContracts"
+@@ -16,6 +16,9 @@ const safeDeploymentContracts_1 = require("../contracts/safeDeploymentContracts"
  exports.PREDETERMINED_SALT_NONCE = '0xb1073742015cbcf5a3a4d9d1ae33ecf619439710b89475f92e2abd2117e90f90';
  const ZKSYNC_MAINNET = 324n;
  const ZKSYNC_TESTNET = 280n;
 +const ZK_CRO_MAINNET = 388n;
 +const ZK_CRO_TESTNET = 282n;
++const ZK_CRO_TESTNET_V3 = 240n;
  // For bundle size efficiency we store SafeProxy.sol/GnosisSafeProxy.sol zksync bytecode hash in hex.
  // To get the values below we need to:
  // 1. Compile Safe smart contracts for zksync
-@@ -133,7 +135,7 @@ async function predictSafeAddress({ ethAdapter, chainId, safeAccountConfig, safe
+@@ -133,7 +136,7 @@ async function predictSafeAddress({ ethAdapter, chainId, safeAccountConfig, safe
      const input = ethAdapter.encodeParameters(['address'], [await safeContract.getAddress()]);
      const from = await safeProxyFactoryContract.getAddress();
      // On the zkSync Era chain, the counterfactual deployment address is calculated differently
 -    const isZkSyncEraChain = [ZKSYNC_MAINNET, ZKSYNC_TESTNET].includes(chainId);
-+    const isZkSyncEraChain = [ZKSYNC_MAINNET, ZKSYNC_TESTNET, ZK_CRO_MAINNET, ZK_CRO_TESTNET].includes(chainId);
++    const isZkSyncEraChain = [ZKSYNC_MAINNET, ZKSYNC_TESTNET, ZK_CRO_MAINNET, ZK_CRO_TESTNET, ZK_CRO_TESTNET_V3].includes(chainId);
      if (isZkSyncEraChain) {
          const proxyAddress = zkSyncEraCreate2Address(from, safeVersion, salt, input);
          return ethAdapter.getChecksummedAddress(proxyAddress);
 diff --git a/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js b/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
-index cfc40d8..a112091 100644
+index cfc40d8..9e3e77f 100644
 --- a/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
 +++ b/node_modules/@safe-global/protocol-kit/dist/src/utils/eip-3770/config.js
-@@ -50,6 +50,7 @@ exports.networks = [
+@@ -46,10 +46,12 @@ exports.networks = [
+     { chainId: 155n, shortName: 'tenet-testnet' },
+     { chainId: 169n, shortName: 'manta' },
+     { chainId: 204n, shortName: 'opbnb' },
++    { chainId: 240n, shortName: 'zkTCRO' },
+     { chainId: 246n, shortName: 'ewt' },
      { chainId: 250n, shortName: 'ftm' },
      { chainId: 255n, shortName: 'kroma' },
      { chainId: 280n, shortName: 'zksync-goerli' },
-+    { chainId: 282n, shortName: 'zkTCRO' },
++    { chainId: 282n, shortName: 'deprecated-zkTCRO' },
      { chainId: 288n, shortName: 'boba' },
      { chainId: 291n, shortName: 'orderly' },
      { chainId: 300n, shortName: 'ogn' },
-@@ -58,6 +59,7 @@ exports.networks = [
+@@ -58,6 +60,7 @@ exports.networks = [
      { chainId: 324n, shortName: 'zksync' },
      { chainId: 336n, shortName: 'sdn' },
      { chainId: 338n, shortName: 'tcro' },
