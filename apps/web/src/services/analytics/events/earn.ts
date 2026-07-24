@@ -1,3 +1,5 @@
+import { EventType } from '../types'
+
 const EARN_CATEGORY = 'earn'
 
 export const EARN_EVENTS = {
@@ -15,6 +17,11 @@ export const EARN_EVENTS = {
   },
   OPEN_EARN_LEARN_MORE: {
     action: 'Open earn learn more',
+    category: EARN_CATEGORY,
+  },
+  EARN_TX_EXECUTED: {
+    event: EventType.TX_EXECUTED,
+    action: 'Execute earn transaction',
     category: EARN_CATEGORY,
   },
   EARN_VIEWED: {

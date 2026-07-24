@@ -1,11 +1,12 @@
 /**
  * Track analytics events using Google Tag Manager
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useState } from 'react'
 import { useTheme } from '@mui/material/styles'
 import {
   gtmTrackPageview,
   gtmSetChainId,
+  gtmFlushQueue,
   gtmEnableCookies,
   gtmDisableCookies,
   gtmSetDeviceType,
@@ -54,9 +55,11 @@ const useGtm = () => {
     })
   }, [isAnalyticsEnabled])
 
-  // Set the chain ID for all GTM events
-  useEffect(() => {
+  // Set the chain ID for all GTM events — useLayoutEffect fires synchronously
+  // before browser paint, preventing the race condition where events fire with empty chainId
+  useLayoutEffect(() => {
     gtmSetChainId(chainId)
+    gtmFlushQueue()
   }, [chainId])
 
   // Set device type for all GTM events

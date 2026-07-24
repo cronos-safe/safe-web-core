@@ -70,7 +70,8 @@ export const getSimulationLink = (simulationId: string, customTenderly?: EnvStat
     return `${baseUrl}/${org}/${project}/simulator/${simulationId}`
   }
 
-  return `${TENDERLY_DASHBOARD_URL}/public/${TENDERLY_ORG_NAME}/${TENDERLY_PROJECT_NAME}/simulator/${simulationId}`
+  // return `${TENDERLY_DASHBOARD_URL}/public/${TENDERLY_ORG_NAME}/${TENDERLY_PROJECT_NAME}/simulator/${simulationId}`
+  return `${TENDERLY_DASHBOARD_URL}/shared/simulation/${simulationId}`
 }
 
 export type SingleTransactionSimulationParams = {

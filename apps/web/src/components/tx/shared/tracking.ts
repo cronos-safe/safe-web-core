@@ -1,7 +1,10 @@
 import type { TransactionDetails } from '@safe-global/store/gateway/AUTO_GENERATED/transactions'
 import { useCallback, useRef } from 'react'
 import { MODALS_EVENTS, trackEvent, MixpanelEventParams } from '@/services/analytics'
-import { TX_EVENTS } from '@/services/analytics/events/transactions'
+import { TX_EVENTS, TX_TYPES } from '@/services/analytics/events/transactions'
+import { SWAP_EVENTS } from '@/services/analytics/events/swaps'
+import { BRIDGE_EVENTS } from '@/services/analytics/events/bridge'
+import { EARN_EVENTS } from '@/services/analytics/events/earn'
 import { getTransactionTrackingType } from '@/services/analytics/tx-tracking'
 import { isNestedConfirmationTxInfo } from '@/utils/transaction-guards'
 
@@ -39,6 +42,20 @@ function getExecutionEvent(args: { isParentSigner: boolean; isNestedConfirmation
     return TX_EVENTS.EXECUTE_VIA_ROLE
   }
   return TX_EVENTS.EXECUTE
+}
+
+function getSpecificExecutionEvent(txType: string) {
+  switch (txType) {
+    case TX_TYPES.native_swap:
+    case TX_TYPES.native_swap_lifi:
+      return SWAP_EVENTS.SWAP_EXECUTED
+    case TX_TYPES.native_bridge:
+      return BRIDGE_EVENTS.BRIDGE_EXECUTED
+    case TX_TYPES.native_earn:
+      return EARN_EVENTS.EARN_TX_EXECUTED
+    default:
+      return null
+  }
 }
 
 export function trackTxEvents(
@@ -85,6 +102,14 @@ export function trackTxEvents(
   } else {
     // Confirmation - no Mixpanel properties
     trackEvent({ ...confirmationEvent, label: txType })
+  }
+
+  // Fire specific execution events for swap/bridge/earn alongside the generic ones
+  if (isExecuted) {
+    const specificEvent = getSpecificExecutionEvent(txType)
+    if (specificEvent) {
+      trackEvent({ ...specificEvent, label: txType })
+    }
   }
 }
 

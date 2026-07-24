@@ -25,8 +25,32 @@ const commonEventParams = {
   safeAddress: '',
 }
 
+// Event queue: buffers events fired before chainId is known
+let eventQueue: Array<{ eventName: string; data: Record<string, unknown> }> = []
+let chainIdReady = false
+
 export const gtmSetChainId = (chainId: string): void => {
   commonEventParams.chainId = chainId
+}
+
+export const gtmFlushQueue = (): void => {
+  if (chainIdReady) return
+  chainIdReady = true
+
+  for (const { eventName, data } of eventQueue) {
+    sendGAEvent('event', eventName, { ...data, chainId: commonEventParams.chainId })
+
+    if (!IS_PRODUCTION) {
+      console.info('[GA] - (flushed)', { ...data, chainId: commonEventParams.chainId })
+    }
+  }
+  eventQueue = []
+}
+
+// Exported for testing only
+export const _resetQueueForTesting = (): void => {
+  eventQueue = []
+  chainIdReady = false
 }
 
 export const gtmSetDeviceType = (type: DeviceType): void => {
@@ -186,7 +210,16 @@ export const gtmTrackSafeApp = (eventData: AnalyticsEvent, appName?: string, sdk
   sendEvent('safeAppEvent', safeAppGtmEvent)
 }
 
-const sendEvent = (eventName: string, data: object) => {
+const sendEvent = (eventName: string, data: Record<string, unknown>) => {
+  if (!chainIdReady && commonEventParams.chainId === '' && !data.chainId) {
+    eventQueue.push({ eventName, data })
+
+    if (!IS_PRODUCTION) {
+      console.info('[GA] - (queued, waiting for chainId)', data)
+    }
+    return
+  }
+
   sendGAEvent('event', eventName, data)
 
   if (!IS_PRODUCTION) {

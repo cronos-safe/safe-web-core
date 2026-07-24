@@ -65,7 +65,7 @@ export const initialState: SettingsState = {
 
   curatedNestedSafes: {},
 
-  hideDust: true,
+  hideDust: false,
 
   hideSuspiciousTransactions: true,
 

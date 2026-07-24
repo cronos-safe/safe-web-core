@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  justify-content: space-between;
+  justify-content: space-around;
   overflow: hidden;
   background: #121312;
 }
@@ -51,7 +51,7 @@
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #a1a3a7;
+  color: #707173;
 }
 
 .mainTitle {
@@ -75,11 +75,12 @@
 @media (max-width: 1199.95px) {
   .loginPage {
     flex-direction: column;
-    min-height: 100vh;
+    height: 100vh;
   }
 
   .rightSide {
     width: 100%;
+    height: 100vh;
   }
 
   .leftSide {

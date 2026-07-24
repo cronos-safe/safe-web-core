@@ -1,4 +1,3 @@
-import WalletBalance from '@/components/common/WalletBalance'
 import { WalletIdenticon } from '@/components/common/WalletOverview'
 import { Box, Button, Typography } from '@mui/material'
 import css from './styles.module.css'
@@ -24,7 +23,7 @@ type WalletInfoProps = {
   handleClose: () => void
 }
 
-export const WalletInfo = ({ wallet, balance, currentChainId, onboard, addressBook, handleClose }: WalletInfoProps) => {
+export const WalletInfo = ({ wallet, onboard, addressBook, handleClose }: WalletInfoProps) => {
   const [authLogout] = useAuthLogoutV1Mutation()
   const dispatch = useAppDispatch()
   const chainInfo = useChain(wallet.chainId)
@@ -75,23 +74,6 @@ export const WalletInfo = ({ wallet, balance, currentChainId, onboard, addressBo
             Wallet
           </Typography>
           <Typography variant="body2">{wallet.label}</Typography>
-        </Box>
-
-        <Box className={css.row}>
-          <Typography variant="body2" color="primary.light">
-            Balance
-          </Typography>
-          <Typography variant="body2" textAlign="right">
-            <WalletBalance balance={balance} />
-
-            {currentChainId !== chainInfo?.chainId && (
-              <>
-                <Typography variant="body2" color="primary.light">
-                  ({chainInfo?.chainName || 'Unknown chain'})
-                </Typography>
-              </>
-            )}
-          </Typography>
         </Box>
       </Box>
 
