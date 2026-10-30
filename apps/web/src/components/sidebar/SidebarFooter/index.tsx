@@ -104,7 +104,7 @@ const SidebarFooter = (): ReactElement => {
             Supported by <SvgIcon component={ProtofireLogo} inheritViewBox fontSize="small" sx={{ mx: 0.5 }} />
             <Link
               target="_blank"
-              href="https://protofire.io/services/solution/safe-deployment"
+              href="https://safe.protofire.io"
               sx={{ color: darkPalette.primary.main, textDecoration: 'none' }}
             >
               Protofire
@@ -121,7 +121,12 @@ const SidebarFooter = (): ReactElement => {
                 {...OVERVIEW_EVENTS.WHATS_NEW}
                 mixpanelParams={{ [MixpanelEventParams.SIDEBAR_ELEMENT]: "What's New" }}
               >
-                <IconButton onClick={handleBeamer} id={BEAMER_SELECTOR} data-testid="list-item-whats-new" color="primary">
+                <IconButton
+                  onClick={handleBeamer}
+                  id={BEAMER_SELECTOR}
+                  data-testid="list-item-whats-new"
+                  color="primary"
+                >
                   <SvgIcon component={BeamerIcon} inheritViewBox fontSize="small" />
                 </IconButton>
               </Track>
