@@ -44,6 +44,22 @@ describe('_getRedirectUrl', () => {
     )
   })
 
+  it('does not treat a javascript: payload glued to the address as a safe (XSS)', () => {
+    const url = _getRedirectUrl({
+      pathname: '/eth:0x1111111111111111111111111111111111111111javascript:alert(document.domain)',
+      search: '',
+    } as Location)
+    expect(url).toBeUndefined()
+  })
+
+  it.each(['//evil.com', '/\\evil.com'])('does not redirect to a protocol-relative URL (%s)', (rest) => {
+    const url = _getRedirectUrl({
+      pathname: `/eth:0x1111111111111111111111111111111111111111${rest}`,
+      search: '',
+    } as Location)
+    expect(url).toBeUndefined()
+  })
+
   it('does not rewrite other transaction routes', () => {
     const url = _getRedirectUrl({
       pathname: '/eth:0xA77DE01e157f9f57C7c4A326eeE9C4874D0598b6/transactions/messages',

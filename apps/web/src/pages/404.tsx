@@ -6,7 +6,8 @@ import { AppRoutes } from '@/config/routes'
 // Rewrite the URL to put the Safe address into the query.
 export const _getRedirectUrl = (location: Location): string | undefined => {
   const { pathname, search } = location
-  const re = /^\/([^/]+?:0x[0-9a-f]{40})/i
+  // The rest must be a same-origin path: no glued scheme, no protocol-relative "//host" or "/\host"
+  const re = /^\/([^/]+?:0x[0-9a-f]{40})(?=\/(?![/\\])|$)/i
   const [, pathSafe] = pathname.match(re) || []
 
   if (pathSafe) {
